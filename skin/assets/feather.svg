@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="20" viewBox="0 0 160 20" role="img" aria-label="衍射分隔紋">
+  <!-- 衍射分隔紋：中央稜晶 + 兩側羽芒 + 貫通細線。單色，供 CSS mask-image 上色。 -->
+  <g fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="round">
+    <path d="M0 10h54M106 10h54"/>
+    <path d="M80 1.5 87.5 10 80 18.5 72.5 10z" stroke-width="2.2"/>
+    <path d="M63 6.2 67.5 10 63 13.8M97 6.2 92.5 10 97 13.8"/>
+  </g>
+</svg>

@@ -1,0 +1,40 @@
+{
+  "$comment": "官方美术的来源与完整性锚点。这些文件**不随仓库分发**（版权归库洛游戏），由 tools/fetch-assets.mjs 在安装时从下列地址获取到 skin/assets/。sha256 用于校验来源未变，不匹配时仅告警不阻断。",
+  "cdn": "https://wutherin.cn-nb1.rains3.com",
+  "page": "https://wuther.in/zh/character/1304/",
+  "license": "角色美术 © Kuro Games（库洛游戏）。仅限本机个人使用，不得再分发。",
+  "assets": [
+    {
+      "file": "jinhsi-pile.webp",
+      "path": "/UI/UIResources/Common/Image/IconRolePile/T_IconRole_Pile_jinxi_UI.webp",
+      "sha256": "a9c291903e5f91dd73f4abeb06959f51324fb841dcab3947d2a70abbc678a21e",
+      "role": "浅色主题背景立绘（半身，洄天溯海）"
+    },
+    {
+      "file": "jinhsi-activity.webp",
+      "path": "/UI/UIResources/Common/Image/PixActivity/T_ActivityRoleJinxi.webp",
+      "sha256": "2e3448ea00ae576beb6880ba3a449e9a6f86e3d1b523c0baff3d72d4a08461fe",
+      "role": "深色主题背景立绘（全身，洄天溯海）"
+    },
+    {
+      "file": "jinhsi-head.webp",
+      "path": "/UI/UIResources/Common/Image/IconRoleHead256/T_IconRoleHead256_24_UI.webp",
+      "sha256": "027d51f758dfc58b603da336ea5e9aaa739ff7a64c12f92d7daffa45a1d9fb71",
+      "role": "头像（侧栏品牌、助手消息、新对话页抬头）"
+    },
+    {
+      "file": "jinhsi-pile-peach.webp",
+      "path": "/UI/UIResources/Common/Image/IconRolePile/T_IconRole_Pile_jinxi2_UI.webp",
+      "sha256": "eaee4cb43c7367db81b86b7cb23716b6121a5077e232782e45e254320a681e8d",
+      "role": "备用：桃夭灼灼套装立绘",
+      "optional": true
+    },
+    {
+      "file": "jinhsi-activity-peach.webp",
+      "path": "/UI/UIResources/Common/Image/PixActivity/T_ActivityRoleJinxi2.webp",
+      "sha256": "b4e7d41c259ff9021983026d0d908a717aa9d020ccab5f32aa7fbb8efc9be4b2",
+      "role": "备用：桃夭灼灼套装全身立绘",
+      "optional": true
+    }
+  ]
+}

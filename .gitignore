@@ -1,0 +1,26 @@
+# --- 官方美术：版权归库洛游戏，本仓库不再分发 -------------------------------
+# 这些文件由 tools/fetch-assets.mjs 在安装时从 wuther.in 的静态资源 CDN 本地获取。
+# 来源与 sha256 锚点见 tools/asset-sources.json。
+skin/assets/*.webp
+skin/assets/*.png
+skin/assets/*.jpg
+
+# --- 本机验证产物：含官方美术或第三方壁纸，不得进入仓库 ----------------------
+# WE 适配对照图里既有官方立绘，也有 Wallpaper Engine 创意工坊作者的壁纸。
+we-adaptation.jpg
+
+# --- 预览图：仓库里提交的是「不含官方美术」的占位版（tools/make-preview.mjs --placeholder）；
+#     装到本机后 install.ps1 会用真实素材重新生成，那一版不进仓库。
+#     这里不忽略 preview/，因为占位版必须随仓库分发（manifest 要求 preview 存在）。
+
+# --- 运行时产物 -------------------------------------------------------------
+*.log
+*.tmp
+_*
+node_modules/
+
+# --- 本机 DSH 相关：绝不入库 ------------------------------------------------
+.credentials.yaml
+.env
+.env.*
+*.token

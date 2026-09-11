@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="令尹印">
+  <!-- 今州令尹印：外環 + 內環 + 龍角 + 潮汐三重浪。單色，供 CSS mask-image 上色。 -->
+  <g fill="none" stroke="#000" stroke-linecap="round">
+    <circle cx="64" cy="70" r="50" stroke-width="3"/>
+    <circle cx="64" cy="70" r="40" stroke-width="1.6"/>
+    <!-- 顱頂類龍角結晶 -->
+    <path d="M46 31c-3-9 1-16 8-19" stroke-width="3"/>
+    <path d="M82 31c3-9-1-16-8-19" stroke-width="3"/>
+    <!-- 潮汐三重浪 -->
+    <path d="M38 63c6-7 12-7 18 0s12 7 18 0 10-7 16 0" stroke-width="3.4"/>
+    <path d="M38 77c6-7 12-7 18 0s12 7 18 0 10-7 16 0" stroke-width="3.4"/>
+    <path d="M47 91c5-6 10-6 15 0s10 6 15 0" stroke-width="3.4"/>
+  </g>
+</svg>

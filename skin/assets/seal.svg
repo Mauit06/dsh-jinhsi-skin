@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="朱砂印">
+  <!-- 朱砂閒章：方框 + 潮汐雙浪。單色，供 CSS mask-image 上色（實際以硃砂色呈現）。 -->
+  <g fill="none" stroke="#000" stroke-linecap="round">
+    <rect x="5" y="5" width="54" height="54" rx="5" stroke-width="4"/>
+    <path d="M14 27c5-6 9-6 14 0s9 6 14 0 6-6 8-2" stroke-width="4"/>
+    <path d="M14 39c5-6 9-6 14 0s9 6 14 0 6-6 8-2" stroke-width="4"/>
+  </g>
+</svg>

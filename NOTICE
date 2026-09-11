@@ -1,0 +1,78 @@
+# NOTICE — 致谢与第三方权利
+
+`dsh-jinhsi-skin` 是非官方第三方主题，与库洛游戏（Kuro Games）、DeepSeek
+以及本仓库提到的任何插件作者均无隶属或背书关系。
+
+## 一、角色与游戏内容
+
+**《鸣潮》/ Wuthering Waves** 及其角色「今汐」、相关名称、美术与设定，
+版权归 **库洛游戏（Kuro Games）** 所有。本仓库：
+
+- **不分发**任何官方美术文件。`skin/assets/*.webp` 已被 `.gitignore` 排除。
+- 由 `tools/fetch-assets.mjs` 在**使用者本机**从第三方站点 wuther.in 的静态资源
+  CDN 获取这些文件，来源与完整性锚点记录在 `tools/asset-sources.json`。
+- 随仓库分发的预览图（`skin/preview/`、`docs/`）为 `--placeholder` 模式产出，
+  **不含官方美术**：立绘与头像位置以本仓库自绘的令尹印替代。
+
+**使用者请注意**：在本机获取到的官方美术仅供个人使用，不得再分发或商用。
+相关权利与许可完全由库洛游戏决定，本仓库的 MIT 许可不覆盖这部分内容。
+
+## 二、本项目原创的部分
+
+以下内容由本仓库作者原创，按 MIT 许可发布：
+
+- 全部代码与脚本：`tools/*.mjs`、`install.ps1`、`uninstall.ps1`、`push.ps1`
+- 样式表：`skin/skin.css`、`skin/patches.css`
+- 自绘矢量纹样：`skin/assets/crest.svg`、`scales.svg`、`tide.svg`、`seal.svg`、`feather.svg`
+- 配色方案、装饰层设计、状态投影、Wallpaper Engine 适配、身份层实现
+- 语料整理与文档：`corpus/`、`persona/`、`README*.md`、`INSTALL.md`
+
+## 三、语料来源
+
+`corpus/` 下的今汐角色文本提取自 **wuther.in** 的角色资料库
+（`https://wuther.in/zh/character/1304/`，数据版本见各文件头部的溯源块）。
+提取脚本 `tools/extract-jinhsi.mjs` 可复现全过程。这些文本的原始著作权
+归库洛游戏所有，此处仅作个人参考与角色扮演之用。
+
+## 四、生态与依赖致谢
+
+- **[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)** —
+  本主题所面向的宿主。皮肤遵循其插件与皮肤契约。
+- **[@linxin666/dsh-client-ui-skin-center](https://github.com/zhu1090093659/dsh-web)**
+  （作者 zhu1090093659 / linxin666）— 皮肤中心与 v2 皮肤契约的实现者。
+  本主题完全建立在其公开契约之上：
+  `skin-manifest-v2.schema.json`、`semantic-attrs-v1.md`、
+  `official-tokens-v1.json`、`primary-action-tokens-v1.md`、
+  `performance-guidelines-v1.md`。
+  没有这份契约面，纯声明式的第三方皮肤不可能存在。
+  该包以 Apache-2.0 发布。
+- **[@deepseek-ai/dsh-agent-presets](https://github.com/deepseek-ai/deepseek-harness)**
+  — 本主题的人格预设由 `tools/compose-preset.mjs` 在其 `standard` 组合基础上
+  现场合成，**不随本仓库分发**其组合文本。
+- **蓝色幻想（blue-fantasy）** — 皮肤中心的内置皮肤，是本主题实现
+  `--dsw-skin-scrim` 联动与装饰层用法的参照。
+- **深海女仆工坊（maid-atelier）**（作者 Small-tailqwq）— 其皮肤目录结构
+  （`skin.json` + `skin.css` + `patches.css` + `assets/` + `preview/`
+  + `LICENSE` + `NOTICE`）是本仓库布局的参照。
+
+## 五、设计参照与独立性声明
+
+设计意图上参考了社区皮肤
+**[is-limo/Mornye-Observation-Skin](https://github.com/is-limo/Mornye-Observation-Skin)**
+所展示的「分层观测工作台」思路（顶／底饰条、环境层、运行状态投影）。
+
+该仓库标记为 `UNLICENSED`。因此本仓库：
+
+- **未复制**其任何 CSS、JavaScript、图片或其他资源；
+- 代码、样式与纹样均为独立实现；
+- 其状态投影依赖 JS 状态机，本主题改用纯 CSS 的 `:has()` 重新实现；
+- 未沿用其插件形态。该插件面向 `@deepseek-ai/dsh@0.1.0-rc.6`，
+  通过 `webServer.tapIndex` 注入 HTML 并硬编码 CSS-Modules 哈希类名；
+  本主题面向皮肤中心的 v2 皮肤契约，是当前版本上受支持、可版本协商的集成点。
+
+## 六、Wallpaper Engine
+
+Wallpaper Engine 及其创意工坊内容归 **Wallpaper Engine 作者与各壁纸原作者**
+所有。本主题**不包含**任何壁纸文件；适配层只是一段 CSS，用于在壁纸挂载时让出
+背景层并保证正文可读。本机验证用的对照图（`we-adaptation.jpg`）含第三方壁纸，
+已被 `.gitignore` 排除，不进仓库。

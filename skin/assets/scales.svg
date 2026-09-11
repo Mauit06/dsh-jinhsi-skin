@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="24" viewBox="0 0 48 24" role="img" aria-label="龍鱗紋">
+  <!-- 龍鱗連續紋，48×24 無縫平鋪。單色，供 CSS mask-image 上色。 -->
+  <g fill="none" stroke="#000" stroke-width="1.4">
+    <path d="M-12 12a12 12 0 0 1 24 0"/>
+    <path d="M12 12a12 12 0 0 1 24 0"/>
+    <path d="M36 12a12 12 0 0 1 24 0"/>
+    <path d="M0 24a12 12 0 0 1 24 0"/>
+    <path d="M24 24a12 12 0 0 1 24 0"/>
+  </g>
+</svg>

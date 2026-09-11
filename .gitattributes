@@ -1,0 +1,16 @@
+# 统一按 LF 存储，避免 Windows 上把 .css / .mjs 提交成 CRLF
+* text=auto eol=lf
+
+# PowerShell 脚本需要 CRLF，且必须带 UTF-8 BOM —— Windows PowerShell 5.1
+# 在无 BOM 时会按 ANSI 解析，脚本里的中文会变成乱码。
+*.ps1 text eol=crlf working-tree-encoding=UTF-8
+
+# 图片一律按二进制处理，避免被行尾转换破坏
+*.jpg binary
+*.png binary
+*.webp binary
+*.gif binary
+
+# 统计里不计入
+docs/* linguist-documentation
+corpus/* linguist-documentation

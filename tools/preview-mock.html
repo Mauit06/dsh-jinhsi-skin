@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-dsh-skin="jinhsi-spectro">
+<head>
+<meta charset="utf-8">
+<title>今汐·洄天溯海 — 预览</title>
+<!--
+  preview-mock.html —— 皮肤预览用的静态壳层复刻。
+
+  说明（诚实披露）：这不是 DSH 真实运行时的截图，而是按官方壳层的语义属性
+  （data-dsh-surface / data-dsh-part / data-chat-flow-kind）搭出的静态 mock。
+  它让 skin.css 与 patches.css 在真实浏览器里被真实解析与合成，因此：
+    · 预览图反映的是皮肤真实的渲染结果；
+    · 同时也是 CSS 的离线渲染自检。
+
+  皮肤中心提供的 6 个固定装饰层在这里按同样的内联样式手工建出，背景媒体
+  （img + scrim）也按加载器的 buildBackgroundMedia 结构手工建出。
+
+  主题由 URL 参数 ?theme=dark 切换。
+-->
+<link rel="stylesheet" href="../skin/skin.css">
+<link rel="stylesheet" href="../skin/patches.css">
+<style>
+  /* 仅用于 mock 自身的壳层骨架与字号，不参与皮肤评估。 */
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1.62;
+    color: var(--dsw-alias-label-primary);
+    background-color: var(--dsw-alias-bg-base);
+    overflow: hidden;
+  }
+  .shell { position: relative; z-index: 1; display: grid; height: 100%;
+    grid-template-columns: 236px minmax(0, 1fr) 274px; }
+  .col { min-width: 0; display: flex; flex-direction: column; }
+  .sidebar { background-color: var(--dsw-specific-sidebar-fill); }
+  /* 复刻真实 logoRow / brand 布局（真实样式来自 sidebar 的 CSS module） */
+  .logoRow { display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+    height: 60px; padding: 8px 0 8px 4px; margin-bottom: 8px; overflow: hidden; }
+  .brand { flex: 1; min-width: 0; display: inline-flex; align-items: center;
+    padding: 0; background: none; border: none; color: inherit; cursor: pointer; }
+  .brandIdentity { display: inline-flex; align-items: center; gap: 8px; height: 24px; min-width: 0; }
+  .brandMark { display: inline-flex; align-items: center; justify-content: center; flex: none; }
+  .brandMark svg { fill: currentColor; }
+  .brandName { display: inline-flex; align-items: center; gap: 6px; height: 24px;
+    min-width: 0; font-size: 18px; font-weight: 600; line-height: 24px; letter-spacing: .04em; }
+  .fallbackBrandName { white-space: nowrap; }
+  .new-session { margin: 2px 12px 12px; padding: 7px 10px; text-align: left;
+    border-radius: 6px; background-color: var(--dsw-alias-button-elevated-fill);
+    color: var(--dsw-alias-label-secondary); }
+  .nav { padding: 0 8px; display: flex; flex-direction: column; gap: 1px; }
+  .nav__item { padding: 7px 10px; border-radius: 6px; color: var(--dsw-alias-label-secondary); }
+  .nav__item--active { background-color: var(--dsw-specific-sidebar-nav-item-active);
+    color: var(--dsw-alias-label-primary);
+    box-shadow: inset 2px 0 0 var(--dsw-specific-sidebar-nav-item-active-accent); }
+  .sidebar__foot { margin-top: auto; padding: 12px 14px; font-size: 11px;
+    color: var(--dsw-alias-label-caption); }
+
+  .session-header { display: flex; align-items: center; justify-content: space-between;
+    padding: 11px 20px; }
+  .session-header__title { font-weight: 600; }
+  .session-header__meta { font-size: 11px; color: var(--dsw-alias-label-caption); }
+  .conversation { flex: 1; overflow: hidden; padding: 16px 20px 0; }
+  .column, .conversation { --dsh-chat-content-width: 748px; }
+  /* flowItem：真实是 .EvIC1a_flowItem（min-width:0），flex 子项被拉伸到整行 */
+  .flowItem { min-width: 0; }
+  .flowItem + .flowItem { margin-top: 16px; }
+
+  /* 用户侧：userRow(align-items:flex-end) > userStack(max-width 82%) > bubble */
+  .userRow { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .userStack { display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+    min-width: 0; max-width: min(calc(var(--dsh-chat-content-width) * .702), 82%); }
+  .bubble { max-width: 100%; padding: 10px 16px; border-radius: 22px;
+    background: var(--dsw-specific-bubble); color: var(--dsw-alias-label-primary);
+    font-size: 14px; line-height: 24px; white-space: pre-wrap; word-break: break-word; }
+
+  /* 助手侧：mdRoot > mdBody > markdown 块（无气泡、无发言人元素） */
+  .mdRoot { display: flex; flex-direction: column; font-size: 14px; line-height: 24px;
+    color: var(--dsw-alias-label-primary); }
+  .mdBody { display: flex; flex-direction: column; gap: 16px; }
+  .mdBody p { margin: 0; }
+  .mdBody ul { margin: 0; padding-inline-start: 20px; }
+  .mdBody blockquote { margin: 0; padding: 7px 12px;
+    border-inline-start: 2px solid var(--dsw-alias-border-l3); border-radius: 0 4px 4px 0; }
+  .mdBody code { padding: 1px 5px; font-family: ui-monospace, Consolas, monospace;
+    font-size: 12px; background-color: var(--dsw-alias-markdown-inline-code); border-radius: 4px; }
+  .mdBody pre { margin: 0; padding: 11px 13px; overflow: hidden;
+    background-color: var(--dsw-alias-markdown-code-block); border-radius: 6px;
+    font-family: ui-monospace, Consolas, monospace; font-size: 12px; line-height: 1.55; }
+  .mdBody table { border-collapse: collapse; font-size: 12px; }
+  .mdBody th, .mdBody td { padding: 5px 11px; border: 1px solid var(--dsw-alias-border-l1);
+    text-align: left; }
+  .mdBody th { font-weight: 600; }
+  .mdBody a { color: var(--dsw-alias-brand-primary); }
+
+  /* 新对话页的 hero（真实是 .pXSMma_*，这里取同样的取值） */
+  .hero { flex: 1; display: flex; align-items: center; justify-content: center;
+    min-width: 0; padding: 0 24px; }
+  .heroStack { display: flex; flex-direction: column; align-items: stretch;
+    gap: 12px; width: 100%; max-width: 780px; }
+  .headline { display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: 12px 10px; font-size: 26px; font-weight: 500; line-height: 32px;
+    color: var(--dsw-alias-label-primary); }
+  .fishHitbox { display: inline-flex; align-items: center; justify-content: center; flex: none; }
+  .titleGroup { display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: 4px 7px; min-width: 0; }
+  .previewBadge { border: .5px solid var(--dsw-alias-interactive-bg-hover);
+    background: var(--dsw-alias-state-business-tertiary);
+    color: var(--dsw-alias-label-primary-bluish);
+    font-family: ui-monospace, Consolas, monospace; white-space: nowrap;
+    border-radius: 24px; align-self: flex-start; margin-top: 2px;
+    padding: 1px 7px 0; font-size: 12px; font-weight: 500; line-height: 18px; }
+  .heroBody { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+
+  /* hero 模式：空对话 —— 只显示 hero，隐藏会话内容与会话头 */
+  .mock-hero { display: none; }
+  body[data-mock-hero] .mock-hero { display: flex; }
+  body[data-mock-hero] .conversation { display: none; }
+  body[data-mock-hero] .session-header { display: none; }
+
+  .composer { padding: 10px 20px 15px; }
+  .composer__box { display: flex; align-items: center; gap: 9px; padding: 11px 13px;
+    border: 1px solid var(--dsw-alias-border-l2); border-radius: 9px;
+    background-color: var(--dsw-specific-input-major); }
+  .composer__input { flex: 1; color: var(--dsw-alias-label-tertiary); }
+  .chip { padding: 3px 9px; font-size: 11px; border-radius: 5px;
+    border: 1px solid var(--dsw-alias-border-l2); color: var(--dsw-alias-label-secondary); }
+  .composer__send { padding: 5px 14px; border-radius: 6px; font-size: 12px;
+    background-color: var(--dsw-alias-button-primary-fill);
+    color: var(--dsw-alias-label-primary-inverted); }
+
+  .details { background-color: var(--dsw-alias-bg-layer-1); padding: 11px 16px; overflow: hidden; }
+  .details__title { font-size: 11px; font-weight: 600; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--dsw-alias-label-caption); margin-bottom: 9px; }
+  .stat { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px;
+    border-bottom: 1px solid var(--dsw-alias-border-l1); }
+  .stat b { font-weight: 600; color: var(--dsw-alias-label-primary); }
+  .stat span { color: var(--dsw-alias-label-tertiary); }
+</style>
+<script>
+  /* mock 专用（皮肤本身不含任何 JS）：?theme=dark 切到深色并换用深色立绘与遮罩。 */
+  (function () {
+    if (new URLSearchParams(location.search).get('theme') !== 'dark') return
+    document.body.setAttribute('data-ds-dark-theme', '')
+    var img = document.querySelector('[data-dsh-skin-layer="background"] > img')
+    var scrim = document.querySelector('[data-dsh-skin-layer="background"] > div')
+    if (img) img.src = '../skin/assets/jinhsi-activity.webp'
+    if (scrim) scrim.style.background = 'linear-gradient(90deg, rgba(10,13,17,0.96) 0%, rgba(10,13,17,0.88) 30%, rgba(12,18,24,0.56) 56%, rgba(12,18,24,0.14) 80%, rgba(12,18,24,0) 100%)'
+  })()
+</script>
+</head>
+<body data-dsh-conversation-content="true">
+
+<!-- ── 皮肤中心提供的 6 个固定装饰层（内联样式与 decoration-layers.ts 一致） ── -->
+<div data-dsh-skin-layer="background" aria-hidden="true"
+     style="position:fixed;top:0;right:0;bottom:0;left:0;z-index:-2;pointer-events:none;will-change:transform;">
+  <img src="../skin/assets/jinhsi-pile.webp" alt="" aria-hidden="true"
+       style="position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;object-fit:cover;">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(90deg, rgba(244,247,250,0.94) 0%, rgba(244,247,250,0.62) 34%, rgba(238,244,248,0.12) 68%, rgba(238,244,248,0) 100%);"></div>
+</div>
+<div data-dsh-skin-layer="ambient" aria-hidden="true"
+     style="position:fixed;top:0;right:0;bottom:0;left:0;z-index:30;pointer-events:none;"></div>
+<div data-dsh-skin-layer="top" aria-hidden="true"
+     style="position:fixed;top:0;left:0;right:0;z-index:40;pointer-events:none;"></div>
+<div data-dsh-skin-layer="bottom" aria-hidden="true"
+     style="position:fixed;bottom:0;left:0;right:0;z-index:40;pointer-events:none;"></div>
+<div data-dsh-skin-layer="sidebar" aria-hidden="true"
+     style="position:fixed;top:0;bottom:0;left:0;z-index:40;pointer-events:none;"></div>
+<div data-dsh-skin-layer="foreground" aria-hidden="true"
+     style="position:fixed;top:0;right:0;bottom:0;left:0;z-index:41;pointer-events:none;"></div>
+
+<!-- ── 壳层骨架 ── -->
+<div class="shell" data-dsh-surface="root">
+
+  <aside class="col sidebar" data-dsh-surface="sidebar">
+    <!-- 复刻真实结构。注意：本机 profile 启用了官方品牌插件（ui-brand-official），
+         它注册了 sidebar.brand.mark / sidebar.brand.name，所以**两个 fallback 都不渲染**，
+         实际是 BrandWordmark 的 <svg>（名字部分是 156×24 的字形路径），不是 <span>。 -->
+    <div class="logoRow">
+      <button class="brand" type="button">
+        <span class="brandIdentity">
+          <span class="brandMark">
+            <div data-slot="sidebar.brand.mark" style="display:contents">
+              <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M2 12c4-6 14-7 18-3-2 1-3 2-3 3s1 2 3 3c-4 4-14 3-18-3z" />
+                <circle cx="17" cy="11" r="1" />
+              </svg>
+            </div>
+          </span>
+          <span class="brandName">
+            <div data-slot="sidebar.brand.name" style="display:contents">
+              <svg width="156" height="24" viewBox="26 0 156 24" aria-hidden="true">
+                <path d="M30 6h70v3H30zM30 12h52v3H30zM30 18h40v3H30z" />
+              </svg>
+            </div>
+          </span>
+        </span>
+      </button>
+    </div>
+    <button class="new-session" data-dsh-part="new-session">＋ 新建会话</button>
+    <nav class="nav">
+      <div class="nav__item nav__item--active">今汐主题 · 布局校准</div>
+      <div class="nav__item">皮肤中心 v2 契约梳理</div>
+      <div class="nav__item">语料提取脚本</div>
+      <div class="nav__item">人格预设组装</div>
+    </nav>
+    <div class="sidebar__foot">今州令尹 · 衍射</div>
+  </aside>
+
+  <main class="col" data-dsh-surface="conversation">
+    <header class="session-header" data-dsh-surface="session-header">
+      <div class="session-header__title">今汐主题 · 布局校准</div>
+      <div class="session-header__meta">deepseek-v4 · 12 轮 · 缓存命中 94%</div>
+    </header>
+
+    <div class="conversation" data-part="scrollport" data-dsh-part="scrollport" data-conversation-scroll>
+      <!-- 真实结构：flowItem 的唯一直接子节点是 [data-slot="conversation.chat.node"]（display:contents），
+           再往下才是 content。助手侧没有气泡、没有发言人名字；用户侧才有 bubble。 -->
+      <div class="flowItem" data-chat-flow-kind="user" data-chat-anchor-key="k1">
+        <div data-slot="conversation.chat.node" style="display:contents">
+          <div class="userRow">
+            <div class="userStack">
+              <div class="bubble">把装饰层按契约接上，别引入任何可执行代码。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flowItem" data-chat-flow-kind="assistant-step" data-chat-anchor-key="k2">
+        <div data-slot="conversation.chat.node" style="display:contents">
+          <div class="mdRoot" data-streaming>
+            <div class="mdBody">
+              <p>已按 <code>skin-manifest-v2</code> 契约接好：皮肤是纯资产目录，装饰全部落在皮肤中心提供的六个固定层上。</p>
+              <blockquote>「四时有序，万物有常，是为天之道。」</blockquote>
+              <ul>
+                <li>背景层承载立绘，遮罩随「背景遮蔽」滑杆联动；</li>
+                <li>顶／底／侧三层铺金线与龙鳞纹；</li>
+                <li>身份层走官方 slot 出口，把鲸鱼换成今汐头像。</li>
+              </ul>
+              <pre>skin/
+├─ skin.json      清单（fail-closed 校验）
+├─ skin.css       L1 token + L2 语义层
+├─ patches.css    L3 装饰层 · 状态投影 · WE 适配 · 身份层
+└─ assets/        立绘与自绘纹样</pre>
+              <table class="md-table">
+                <tr><th>层</th><th>z-index</th><th>用途</th></tr>
+                <tr><td>background</td><td>-2</td><td>立绘与氛围底</td></tr>
+                <tr><td>ambient</td><td>30</td><td>衍射微光、令尹印水印</td></tr>
+                <tr><td>foreground</td><td>41</td><td>四角回纹与暗角</td></tr>
+              </table>
+              <p>详见 <a href="#">patches.css</a> 与契约文档。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero mock-hero">
+      <div class="heroStack">
+        <div class="headline">
+          <span class="fishHitbox">
+            <div data-slot="conversation.hero.brand.mark" style="display:contents">
+              <svg width="34" height="25" viewBox="0 0 23.16 17.04" aria-hidden="true">
+                <path d="M2 8.5c4-6 14-7 18-3-2 1-3 2-3 3s1 2 3 3c-4 4-14 3-18-3z" />
+              </svg>
+            </div>
+          </span>
+          <span class="titleGroup">
+            <span>探索未至之境</span>
+            <span class="previewBadge">预览版</span>
+          </span>
+        </div>
+        <div class="heroBody"></div>
+      </div>
+    </div>
+
+    <div class="composer" data-dsh-surface="composer">
+      <div class="composer__box">
+        <span class="chip" data-dsh-part="composer-chip">今汐主题</span>
+        <span class="composer__input" data-dsh-part="composer-input" data-phase="idle">输入消息…</span>
+        <span class="composer__send">发送</span>
+      </div>
+    </div>
+  </main>
+
+  <aside class="col details" data-dsh-surface="details">
+    <div class="details__title">运行状态</div>
+    <div class="stat"><span>状态</span><b>IDLE</b></div>
+    <div class="stat"><span>会话</span><b>jinhsi-spectro</b></div>
+    <div class="stat"><span>皮肤契约</span><b>v2</b></div>
+    <div class="stat"><span>hooks</span><b>未声明</b></div>
+    <div class="stat"><span>样式层</span><b>L1 + L2 + L3</b></div>
+    <div class="details__title" style="margin-top:18px;">今日州</div>
+    <div class="stat"><span>令尹</span><b>今汐</b></div>
+    <div class="stat"><span>属性</span><b>衍射</b></div>
+    <div class="stat"><span>异能</span><b>寒尽觉春生</b></div>
+  </aside>
+
+</div>
+</body>
+</html>

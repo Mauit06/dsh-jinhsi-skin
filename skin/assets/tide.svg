@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="12" viewBox="0 0 40 12" role="img" aria-label="潮汐回紋">
+  <!-- 潮汐回紋，40×12 無縫平鋪。單色，供 CSS mask-image 上色。 -->
+  <g fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round">
+    <path d="M0 6c5-6 10-6 15 0s10 6 15 0 5-6 10 0"/>
+    <circle cx="20" cy="6" r="1.7" fill="#000" stroke="none"/>
+  </g>
+</svg>

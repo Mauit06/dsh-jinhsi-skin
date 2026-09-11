@@ -1,0 +1,662 @@
+/* ============================================================================
+ * 今汐·洄天溯海 (jinhsi-spectro) — patches.css
+ *
+ * L3：自由选择器补丁（契约中如实公示为「高敏感」）。
+ *
+ * 本皮肤是纯声明式的（本地皮肤不运行 hooks），因此全部装饰都由 CSS 完成：
+ *   · 填充皮肤中心提供的 6 个固定装饰层 [data-dsh-skin-layer="…"]
+ *   · 覆盖加载器为背景媒体写入的内联样式（必须 !important）
+ *   · 用 :has() 读取官方壳层已有的运行状态，做无 JS 的状态投影
+ *
+ * 全部 url() 都是皮肤目录内的相对路径（契约白名单：禁 @import / 远程 / 协议相对 / 绝对路径）。
+ * @keyframes 一律加 jinhsi- 前缀，避免跨皮肤撞名。
+ * ========================================================================= */
+
+/* ── 背景层：氛围底色 + 立绘定位 ────────────────────────────────────────── */
+
+[data-dsh-skin-layer="background"] {
+  background-color: var(--jinhsi-porcelain);
+  background-image:
+    radial-gradient(118% 88% at 90% 6%, color-mix(in srgb, var(--jinhsi-spectro) 26%, transparent) 0%, transparent 56%),
+    radial-gradient(86% 68% at 4% 98%, color-mix(in srgb, var(--jinhsi-mint) 14%, transparent) 0%, transparent 60%),
+    linear-gradient(168deg,
+      var(--jinhsi-porcelain-hi) 0%,
+      var(--jinhsi-porcelain) 44%,
+      color-mix(in srgb, var(--jinhsi-ice) 28%, var(--jinhsi-porcelain)) 100%);
+}
+
+/* 立绘：贴底、contain 保比例，横向落在「对话区右缘」附近，避开右侧详情列。
+   加载器写入的是 cover 全幅内联样式，必须 !important 覆盖。 */
+[data-dsh-skin-layer="background"] > img {
+  object-fit: contain !important;
+  object-position: 70% 100% !important;
+  box-sizing: border-box !important;
+  padding: 5vh 0 0 3vw !important;
+  opacity: 0.98 !important;
+  filter: drop-shadow(-16px 0 32px color-mix(in srgb, var(--jinhsi-ink) 18%, transparent)) !important;
+}
+
+/* 深色用的是全身立绘（更长），再往右挪一点，避免压住正文。 */
+body[data-ds-dark-theme] [data-dsh-skin-layer="background"] > img {
+  object-position: 80% 100% !important;
+}
+
+/* 遮罩随皮肤中心的「背景遮蔽」滑杆变浓：滑杆值越大，立绘被压得越暗。 */
+[data-dsh-skin-layer="background"] > div {
+  opacity: calc(0.5 + var(--dsw-skin-scrim, 0) * 0.5) !important;
+}
+
+/* ── 环境层：衍射微光 + 令尹印水印 ──────────────────────────────────────── */
+
+[data-dsh-skin-layer="ambient"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(52% 42% at 82% 14%, color-mix(in srgb, var(--jinhsi-spectro) 20%, transparent) 0%, transparent 68%),
+    radial-gradient(44% 38% at 8% 86%, color-mix(in srgb, var(--jinhsi-jade) 12%, transparent) 0%, transparent 70%);
+  animation: jinhsi-drift 26s ease-in-out infinite alternate;
+}
+
+[data-dsh-skin-layer="ambient"]::after {
+  content: "";
+  position: absolute;
+  left: 3.2vw;
+  bottom: 3.4vh;
+  width: 168px;
+  height: 168px;
+  background-color: color-mix(in srgb, var(--jinhsi-gold) 34%, transparent);
+  opacity: 0.22;
+  -webkit-mask-image: url(assets/crest.svg);
+  mask-image: url(assets/crest.svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* ── 顶层饰条：金线 + 潮汐回纹 ──────────────────────────────────────────── */
+
+[data-dsh-skin-layer="top"] {
+  height: 2px;
+  background-image: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--jinhsi-gold) 78%, transparent) 10%,
+    color-mix(in srgb, var(--jinhsi-gold) 78%, transparent) 90%,
+    transparent 100%);
+}
+
+[data-dsh-skin-layer="top"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 11px;
+  background-color: color-mix(in srgb, var(--jinhsi-gold) 20%, transparent);
+  -webkit-mask-image: url(assets/tide.svg);
+  mask-image: url(assets/tide.svg);
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: 40px 12px;
+  mask-size: 40px 12px;
+  -webkit-mask-position: left top;
+  mask-position: left top;
+}
+
+/* 生成中：金线沿顶部行进 */
+[data-dsh-skin-layer="top"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 34%;
+  height: 2px;
+  opacity: 0;
+  background-image: linear-gradient(90deg,
+    transparent 0%,
+    var(--jinhsi-gold-hi) 50%,
+    transparent 100%);
+}
+
+/* ── 底层饰条：金线 + 龙鳞纹 + 衍射分隔 + 朱砂闲章 ──────────────────────── */
+
+[data-dsh-skin-layer="bottom"] {
+  height: 2px;
+  background-image: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--jinhsi-gold) 70%, transparent) 10%,
+    color-mix(in srgb, var(--jinhsi-gold) 70%, transparent) 90%,
+    transparent 100%);
+}
+
+[data-dsh-skin-layer="bottom"]::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 13px;
+  background-color: color-mix(in srgb, var(--jinhsi-jade) 30%, transparent);
+  -webkit-mask-image: url(assets/scales.svg);
+  mask-image: url(assets/scales.svg);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  -webkit-mask-size: 48px 24px;
+  mask-size: 48px 24px;
+  -webkit-mask-position: left bottom;
+  mask-position: left bottom;
+}
+
+/* 居中的衍射分隔纹 */
+[data-dsh-skin-layer="bottom"]::after {
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  width: 168px;
+  height: 19px;
+  margin-left: -84px;
+  background-color: color-mix(in srgb, var(--jinhsi-gold) 44%, transparent);
+  -webkit-mask-image: url(assets/feather.svg);
+  mask-image: url(assets/feather.svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* ── 侧栏饰条：左缘金缝 ─────────────────────────────────────────────────── */
+
+[data-dsh-skin-layer="sidebar"] {
+  width: 3px;
+  background-image: linear-gradient(180deg,
+    color-mix(in srgb, var(--jinhsi-gold) 60%, transparent) 0%,
+    color-mix(in srgb, var(--jinhsi-jade) 46%, transparent) 48%,
+    color-mix(in srgb, var(--jinhsi-gold) 60%, transparent) 100%);
+  opacity: 0.75;
+}
+
+/* ── 前景层：四角回纹 + 暗角 ────────────────────────────────────────────── */
+
+[data-dsh-skin-layer="foreground"] {
+  background-image: radial-gradient(128% 108% at 50% 50%, transparent 58%, var(--jinhsi-vignette) 100%);
+}
+
+[data-dsh-skin-layer="foreground"]::before,
+[data-dsh-skin-layer="foreground"]::after {
+  content: "";
+  position: absolute;
+  width: 78px;
+  height: 78px;
+  background-color: color-mix(in srgb, var(--jinhsi-gold) 48%, transparent);
+  -webkit-mask-image: url(assets/tide.svg);
+  mask-image: url(assets/tide.svg);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  -webkit-mask-size: 40px 12px;
+  mask-size: 40px 12px;
+  opacity: 0.5;
+}
+
+[data-dsh-skin-layer="foreground"]::before {
+  top: 14px;
+  left: 14px;
+  -webkit-mask-position: left top;
+  mask-position: left top;
+}
+
+[data-dsh-skin-layer="foreground"]::after {
+  right: 14px;
+  bottom: 14px;
+  -webkit-mask-position: right bottom;
+  mask-position: right bottom;
+}
+
+/* ============================================================================
+ * 状态投影：只读取官方壳层已经存在的属性，不新增任何运行时。
+ * 判定锚点：data-streaming（助手正文流式根）、data-chat-flow-kind（聊天流条目类型）、
+ *           html/body[data-dsh-conversation-content]（皮肤中心在有消息时置位）。
+ * :has() 里不使用逗号，避免选择器作用域化时被误拆。
+ * ========================================================================= */
+
+/* 生成中：环境光晕加速呼吸，顶部金线行进 */
+body:has([data-streaming]) [data-dsh-skin-layer="ambient"]::before {
+  animation-duration: 6.5s;
+}
+
+body:has([data-streaming]) [data-dsh-skin-layer="top"]::after {
+  opacity: 1;
+  animation: jinhsi-sweep 2.2s linear infinite;
+}
+
+/* 工具运行：左缘金缝转为薄荷青 */
+body:has([data-chat-flow-kind="tool-call"]) [data-dsh-skin-layer="sidebar"] {
+  background-image: linear-gradient(180deg,
+    color-mix(in srgb, var(--jinhsi-mint) 78%, transparent) 0%,
+    color-mix(in srgb, var(--jinhsi-mint) 52%, transparent) 60%,
+    color-mix(in srgb, var(--jinhsi-gold) 60%, transparent) 100%);
+  opacity: 1;
+  animation: jinhsi-pulse 1.6s ease-in-out infinite;
+}
+
+/* 回合出错：上下金线转朱砂 */
+body:has([data-chat-flow-kind="turn-error"]) [data-dsh-skin-layer="top"],
+body:has([data-chat-flow-kind="turn-error"]) [data-dsh-skin-layer="bottom"] {
+  background-image: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--jinhsi-cinnabar) 80%, transparent) 10%,
+    color-mix(in srgb, var(--jinhsi-cinnabar) 80%, transparent) 90%,
+    transparent 100%);
+}
+
+/* 空对话：收敛装饰，把注意力留给输入区。
+   两个坑：该属性是「存在即真」——空对话时被 removeAttribute 掉，不是 ="false"；
+   而且选择器不能以 html[...] 开头（见下方 WE 段落开头的说明）。 */
+body:not([data-dsh-conversation-content]) [data-dsh-skin-layer="ambient"]::after {
+  opacity: 0.12;
+}
+
+/* ============================================================================
+ * Wallpaper Engine 适配
+ *
+ * 为什么必须写这一段：
+ *   · WE 壁纸的媒体层在 z-index:-3，压暗遮罩在 -2；而本皮肤的 background 装饰层
+ *     同样在 -2（见 decoration-layers.ts 的 LAYER_STYLE）。
+ *   · 皮肤中心的中和样式（wallpaper.ts 的 rootNeutralizer，仅在壁纸挂载期间注入）
+ *     只覆盖 html / body / #root / [data-dsh-wallpaper-surface] /
+ *     [data-composer-seat]::before —— **不覆盖 [data-dsh-skin-layer]**。
+ *   · 控制器抑制皮肤背景媒体时走的是 clearLayer(layers.background)，只清掉层的
+ *     子节点；层元素本身、以及它身上由 patches.css 画的底色和渐变，原样留着。
+ *   结论：不写这段，那层不透明底色会把用户挑的壁纸整个盖住——壁纸看起来「没生效」。
+ *
+ * 锚点为什么是 body[...] 而不是 html[...]：
+ *   加载器的作用域化（scopeSelectorText）会把作用域前缀拼在复合选择器最前面，
+ *   而它只对 `:root` / `html` / `html[data-ds-…]` / `body…` 开头做特判。
+ *   `html[data-dsh-wallpaper-active]` 不匹配任何特判（注意是 data-dsh-，不是 data-ds-），
+ *   于是会被拼成 `html[data-dsh-skin="…"] html[data-dsh-wallpaper-active] …`，
+ *   即要求 html 嵌套在 html 里 —— 永远匹配不到。
+ *   该属性同时打在 html 与 body 上，所以以 body[...] 开头既正确又能命中。
+ *
+ * 置位与清除由 WallpaperController 负责，皮肤不需要自己监听或轮询。
+ * ========================================================================= */
+
+/* 1) 背景层改为「纱」而不是「底」：
+      壁纸拥有画面，但任意壁纸的明暗都不可控，正文必须有东西托着。
+      这层在 z-index:-2，正好夹在壁纸（-3）与面板之间——是加纱的正确位置。
+      α 由「背景遮蔽」滑杆驱动，所以用户仍然只有一个可读性旋钮。
+      注意：不能改成 transparent，那会把中栏正文直接晾在壁纸上。 */
+body[data-dsh-wallpaper-active] [data-dsh-skin-layer="background"] {
+  background-color: rgba(var(--jinhsi-veil-rgb), calc(0.26 + var(--dsw-skin-scrim, 0) * 0.56));
+  background-image: none !important;
+}
+
+/* 兜底：控制器清内容与这段 CSS 生效之间若有瞬时差，别闪出立绘或旧遮罩 */
+body[data-dsh-wallpaper-active] [data-dsh-skin-layer="background"] > img,
+body[data-dsh-wallpaper-active] [data-dsh-skin-layer="background"] > div {
+  display: none !important;
+}
+
+/* 2) 环境层：收起专为自有底色打的衍射光晕——它会在任意壁纸上蒙一层暖雾，
+      只留很淡的一点作为皮肤的存在感 */
+body[data-dsh-wallpaper-active] [data-dsh-skin-layer="ambient"]::before {
+  opacity: 0.3;
+  animation: none;
+}
+
+body[data-dsh-wallpaper-active] [data-dsh-skin-layer="ambient"]::after {
+  opacity: 0.15;
+}
+
+/* 3) 前景层：加强暗角，让不可控的壁纸内容与界面四边过渡干净 */
+body[data-dsh-wallpaper-active] [data-dsh-skin-layer="foreground"] {
+  background-image: radial-gradient(124% 106% at 50% 50%,
+    transparent 44%,
+    color-mix(in srgb, var(--jinhsi-ink) 30%, transparent) 100%);
+}
+
+/* 4) 壁纸下把来信卡片调实一点；用户气泡本来就有底色，不再叠卡片。
+      这里不加 backdrop-filter：R4 要求它只覆盖「需要该效果的最小表面」，
+      而消息区滚动时它要逐卡实时重采样；靠提高底色不透明度拿到同样的可读性，
+      合成成本却是零。 */
+body[data-dsh-wallpaper-active] [data-chat-flow-kind="assistant-step"] {
+  background-color: rgba(var(--jinhsi-card-rgb), 0.86);
+}
+
+body[data-dsh-wallpaper-active] [data-dsh-surface="session-header"] {
+  background-color: rgba(var(--jinhsi-card-rgb), 0.5);
+}
+
+/* 5) 面板抬一档不透明度：壁纸内容不可控，正文必须始终压得住。
+      仍然乘 var(--dsw-skin-scrim)，与纱幕共用同一个滑杆。 */
+body[data-dsh-wallpaper-active] {
+  --dsw-alias-bg-base: rgba(var(--jinhsi-veil-rgb), calc(0.26 + var(--dsw-skin-scrim, 0) * 0.56));
+  --dsw-alias-bg-layer-1: rgba(var(--jinhsi-card-rgb), calc(0.9 - var(--dsw-skin-scrim, 0) * 0.24));
+  --dsw-alias-bg-layer-2: rgba(235, 240, 244, calc(0.88 - var(--dsw-skin-scrim, 0) * 0.22));
+  --dsw-alias-bg-layer-3: rgba(223, 230, 236, calc(0.86 - var(--dsw-skin-scrim, 0) * 0.2));
+  --dsw-specific-sidebar-fill: rgba(238, 243, 247, calc(0.86 - var(--dsw-skin-scrim, 0) * 0.24));
+}
+
+body[data-dsh-wallpaper-active][data-ds-dark-theme] {
+  --dsw-alias-bg-base: rgba(var(--jinhsi-veil-rgb), calc(0.3 + var(--dsw-skin-scrim, 0) * 0.54));
+  --dsw-alias-bg-layer-1: rgba(var(--jinhsi-card-rgb), calc(0.9 - var(--dsw-skin-scrim, 0) * 0.24));
+  --dsw-alias-bg-layer-2: rgba(27, 34, 42, calc(0.88 - var(--dsw-skin-scrim, 0) * 0.22));
+  --dsw-alias-bg-layer-3: rgba(35, 44, 53, calc(0.86 - var(--dsw-skin-scrim, 0) * 0.2));
+  --dsw-specific-sidebar-fill: rgba(16, 21, 27, calc(0.88 - var(--dsw-skin-scrim, 0) * 0.24));
+}
+
+/* 金线、龙鳞纹、四角回纹、令尹印一概保留——壁纸之下，这些才是皮肤还在场的证据。 */
+
+/* ============================================================================
+ * 身份层：今汐的头像与品牌
+ *
+ * 锚点全部来自**官方 slot 出口**。皮肤中心的 renderer 里：
+ *
+ *     function SlotOutlet({ slotKey, … }) {
+ *       return <div data-slot={slotKey} style={{ display: "contents" }}>…</div>
+ *     }
+ *
+ * 也就是说每个 slot 都会渲染出一个 `[data-slot="<slotKey>"]` 元素，且 display:contents
+ * 让它布局透明、纯作可寻址的锚。这是官方的稳定选择器，**不依赖任何 CSS-Modules 哈希类名**，
+ * 官方重建样式也不会失效。用到的三个：
+ *
+ *     [data-slot="sidebar.brand.mark"]        侧栏左上角的品牌标记（fallback 是鲸鱼 svg）
+ *     [data-slot="sidebar.brand.name"]        侧栏左上角的品牌名（fallback 是 "DeepSeek Harness"）
+ *     [data-slot="conversation.hero.brand.mark"]  空对话欢迎区的大品牌标记
+ *
+ * display:contents 的元素自身不生成盒子，所以**不能在它身上加 background/::before**；
+ * 但它的子元素照常参与 DOM 组合器，因此这里一律走 `> svg` / `> span` 这种结构化子选择器。
+ * ========================================================================= */
+
+/* 侧栏品牌标记：鲸鱼 → 今汐头像 */
+[data-slot="sidebar.brand.mark"] > svg {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-image: url(assets/jinhsi-head.webp);
+  background-size: 134%;
+  background-position: 50% 30%;
+  background-repeat: no-repeat;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--jinhsi-gold) 68%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--jinhsi-jade) 12%, transparent);
+}
+
+/* 藏掉鲸鱼图形本身，保留它 24×24 的盒子作为头像画布 */
+[data-slot="sidebar.brand.mark"] > svg > * {
+  display: none;
+}
+
+/* 侧栏品牌名：DeepSeek Harness → 今汐
+ *
+ * 注意：本机 profile 启用了官方品牌插件（ui-brand-official），它注册了
+ * `sidebar.brand.name`，因此**渲染的不是 fallback 的 <span>，而是 BrandWordmark 的
+ * 156×24 <svg>（产品名字形路径）**。所以这里按 `> svg` 处理，而不是 `> span`。
+ * 又因为出口是 display:contents 不能承载伪元素，文字挂到它的宿主 span 上；
+ * 宿主用 `span:has(> [data-slot="sidebar.brand.name"])` 结构定位，不碰哈希类名。 */
+[data-slot="sidebar.brand.name"] > svg,
+[data-slot="sidebar.brand.name"] > span,
+[data-slot="sidebar.brand.name"] > * {
+  display: none !important;
+}
+
+span:has(> [data-slot="sidebar.brand.name"]) {
+  font-size: 0;
+}
+
+span:has(> [data-slot="sidebar.brand.name"])::after {
+  content: "今汐";
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--jinhsi-gold);
+}
+
+/* 空对话欢迎区的大品牌标记：同一张脸，放大 */
+[data-slot="conversation.hero.brand.mark"] > svg {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-image: url(assets/jinhsi-head.webp);
+  background-size: 134%;
+  background-position: 50% 30%;
+  background-repeat: no-repeat;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--jinhsi-gold) 62%, transparent),
+    0 0 0 6px color-mix(in srgb, var(--jinhsi-jade) 10%, transparent),
+    0 6px 22px color-mix(in srgb, var(--jinhsi-ink) 26%, transparent);
+}
+
+[data-slot="conversation.hero.brand.mark"] > svg > * {
+  display: none;
+}
+
+/* ── 新对话页的抬头文案 ───────────────────────────────────────────────────
+ *
+ * 「探索未至之境 预览版」→「桃夭灼灼牵丝动 漂泊者」
+ *
+ * 结构（ui-conversation 的 HeroShell，14619-14649 行）：
+ *   div.headline
+ *     ├─ span.fishHitbox  > div[data-slot="conversation.hero.brand.mark"]
+ *     └─ span.titleGroup  > [ <span>探索未至之境</span>,
+ *                             <span class="…previewBadge">预览版</span> ]
+ *
+ * 这一带**只有 brand.mark 一个 slot 出口**可作稳定锚点，标题组是它的下一个兄弟，
+ * 所以用 `span:has(> [data-slot=…]) + span` 定位；标题那个 span **没有 class**、
+ * 徽标那个**有 class**，用 `:not([class])` / `[class]` 精确区分，
+ * 比 :first-child/:last-child 稳（万一将来只渲染一个也不会有歧义）。
+ *
+ * CSS 改不了文本内容，所以走标准做法：把原文案 font-size 归零藏起来，
+ * 再用 ::after 注入新文案。原文仍留在 DOM 里（对读屏与复制友好），
+ * 行高与内边距都继承原值，因此布局不变。
+ * ------------------------------------------------------------------------- */
+
+span:has(> [data-slot="conversation.hero.brand.mark"]) + span > span {
+  font-size: 0;
+}
+
+/* 标题：桃夭灼灼牵丝动 */
+span:has(> [data-slot="conversation.hero.brand.mark"]) + span > span:not([class])::after {
+  content: "桃夭灼灼牵丝动";
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 0.06em;
+  /* 与「可读文字色」混合：浅色下更沉、深色下更亮，两个主题都只会提升对比度。 */
+  color: color-mix(in srgb, var(--jinhsi-gold) 84%, var(--jinhsi-ink));
+  /* hero 悬在立绘/壁纸之上，背景明暗不可控，加一圈同色系柔光把字托起来。 */
+  text-shadow:
+    0 1px 10px color-mix(in srgb, var(--jinhsi-porcelain) 78%, transparent),
+    0 0 26px color-mix(in srgb, var(--jinhsi-porcelain) 62%, transparent);
+}
+
+/* 徽标：预览版 → 漂泊者，并换成金色闲章样式。
+   底色必须够实 —— hero 背后是立绘或壁纸，半透明的 chip 会直接糊掉。 */
+span:has(> [data-slot="conversation.hero.brand.mark"]) + span > span[class] {
+  border-color: color-mix(in srgb, var(--jinhsi-gold) 54%, transparent);
+  background: color-mix(in srgb, var(--jinhsi-porcelain-hi) 92%, transparent);
+  color: color-mix(in srgb, var(--jinhsi-gold) 72%, var(--jinhsi-ink));
+  font-family: inherit;
+  box-shadow: 0 1px 8px color-mix(in srgb, var(--jinhsi-ink) 12%, transparent);
+}
+
+span:has(> [data-slot="conversation.hero.brand.mark"]) + span > span[class]::after {
+  content: "漂泊者";
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0.12em;
+}
+
+/* 助手消息：左侧圆形头像。
+   [data-chat-flow-kind] 就打在聊天流条目本体（ChatView 的 flowItem）上，
+   它是真实盒子，::before 可用——不需要碰任何哈希类名。
+   `:not([hidden])` 是必需的：折叠的行可能是 hidden="until-found"。 */
+[data-chat-flow-kind="assistant-step"]:not([hidden]) {
+  position: relative;
+  padding-inline-start: var(--jinhsi-avatar-gutter);
+}
+
+[data-chat-flow-kind="assistant-step"]:not([hidden])::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 1px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-image: url(assets/jinhsi-head.webp);
+  background-size: 134%;
+  background-position: 50% 30%;
+  background-repeat: no-repeat;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--jinhsi-gold) 58%, transparent),
+    0 2px 10px color-mix(in srgb, var(--jinhsi-ink) 20%, transparent);
+  pointer-events: none;
+}
+
+/* 工具调用 / 结果行不带头像，但与其后的助手正文对齐 */
+[data-chat-flow-kind="tool-call"],
+[data-chat-flow-kind="tool-result"] {
+  padding-inline-start: var(--jinhsi-avatar-gutter);
+}
+
+/* ============================================================================
+ * 对话形态：仿《鸣潮》飞讯
+ *
+ * 思路：官方壳层里**只有用户消息是气泡**，助手正文是直接铺在背景上的纯 markdown。
+ * 所以这里不试图去改气泡内部（那需要 [class*=…] 哈希类名），而是分两头做：
+ *   · 助手侧 —— 在聊天流条目本体（[data-chat-flow-kind]，真实盒子）上直接做一张
+ *     「来信」卡片，半径做成不对称，左上角留小圆角给头像，就是一个标准的来信气泡；
+ *   · 用户侧 —— 气泡配色本来就由 --dsw-specific-bubble 驱动（skin.css 已改为青玉调），
+ *     这里只在条目右侧补一个「去信」小尖角，位置天然对齐气泡右上角。
+ * 全程只用官方 data 属性，零哈希类名。
+ * ========================================================================= */
+
+/* 来信卡片 */
+[data-chat-flow-kind="assistant-step"]:not([hidden]) {
+  padding: 11px 16px 11px var(--jinhsi-avatar-gutter);
+  border-radius: 4px 16px 16px 16px;
+  background-color: rgba(var(--jinhsi-card-rgb), 0.55);
+  border: 1px solid color-mix(in srgb, var(--jinhsi-gold) 26%, transparent);
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--jinhsi-ink) 6%, transparent),
+    0 6px 18px color-mix(in srgb, var(--jinhsi-ink) 9%, transparent);
+}
+
+/* 来信卡片左上角那一小片，用金色勾一下，作为「信笺抬头」的暗示 */
+[data-chat-flow-kind="assistant-step"]:not([hidden])::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: var(--jinhsi-avatar-gutter);
+  top: 0;
+  width: 42px;
+  height: 2px;
+  background-image: linear-gradient(90deg,
+    color-mix(in srgb, var(--jinhsi-gold) 78%, transparent) 0%,
+    transparent 100%);
+}
+
+/* 宽表格补偿：.md-table-wide 按 100cqw 破格，而 100cqw 不含我们占用的缩进，
+   不做补偿时整张表会向右溢出 --jinhsi-avatar-gutter 那么多。
+   （.md-table-wide 是 markdown 渲染器输出的语义类名，不是 CSS-Modules 哈希，可安全依赖。） */
+[data-chat-flow-kind="assistant-step"] .md-table-wide {
+  width: calc(100% + var(--dsh-table-lead) + var(--dsh-table-spare) - var(--jinhsi-avatar-gutter));
+}
+
+/* 去信气泡的右上小尖角 */
+[data-chat-flow-kind="user"] {
+  position: relative;
+}
+
+[data-chat-flow-kind="user"]::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0;
+  top: 13px;
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  background-color: var(--dsw-specific-bubble);
+  transform: rotate(45deg) translateX(4px);
+  pointer-events: none;
+}
+
+/* 消息之间的呼吸：飞讯的节奏比默认松一点 */
+[data-chat-flow-kind="assistant-step"] + [data-chat-flow-kind="assistant-step"] {
+  margin-top: 8px;
+}
+
+/* ============================================================================
+ * 细节：代码块 / 表格 / 引用 / 行内代码 / 气泡
+ *
+ * 锚点用 [data-chat-flow-kind="assistant-step"] 而**不是**契约里的
+ * data-dsh-part="message-body"。原因：皮肤中心的兼容适配器是从 [data-streaming]
+ * 给助手正文根盖章的，而它的 MutationObserver 只监听 childList、且 applyRule 从不
+ * 撤销属性 —— 于是历史消息（挂载时就已不是流式）很可能从未被盖上这个标记。
+ * data-chat-flow-kind 是官方直接写在 flowItem 上的，永远存在。
+ * 依旧只用官方 data 属性，不匹配哈希类名。
+ * ========================================================================= */
+
+[data-chat-flow-kind="assistant-step"] pre {
+  border: 1px solid color-mix(in srgb, var(--jinhsi-gold) 22%, transparent);
+  border-radius: 6px;
+}
+
+[data-chat-flow-kind="assistant-step"] blockquote {
+  border-inline-start: 2px solid color-mix(in srgb, var(--jinhsi-jade) 56%, transparent);
+  background-color: color-mix(in srgb, var(--jinhsi-jade) 6%, transparent);
+}
+
+[data-chat-flow-kind="assistant-step"] code {
+  border-radius: 4px;
+}
+
+[data-chat-flow-kind="assistant-step"] table th {
+  background-color: color-mix(in srgb, var(--jinhsi-gold) 10%, transparent);
+}
+
+[data-chat-flow-kind="assistant-step"] table td,
+[data-chat-flow-kind="assistant-step"] table th {
+  border-color: var(--jinhsi-thin);
+}
+
+[data-chat-flow-kind="assistant-step"] hr {
+  border-color: color-mix(in srgb, var(--jinhsi-gold) 34%, transparent);
+}
+
+/* 链接：金线下划 */
+[data-chat-flow-kind="assistant-step"] a {
+  text-decoration-color: color-mix(in srgb, var(--jinhsi-gold) 62%, transparent);
+  text-underline-offset: 3px;
+}
+
+/* ============================================================================
+ * 动效
+ * ========================================================================= */
+
+@keyframes jinhsi-drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-1.6%, 1.2%, 0) scale(1.06); }
+}
+
+@keyframes jinhsi-sweep {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(360%); }
+}
+
+@keyframes jinhsi-pulse {
+  0%, 100% { opacity: 0.82; }
+  50% { opacity: 1; }
+}
+
+/* 尊重系统「减少动态效果」：全部动画与过渡停用，装饰保持静止。 */
+@media (prefers-reduced-motion: reduce) {
+  [data-dsh-skin-layer]::before,
+  [data-dsh-skin-layer]::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
