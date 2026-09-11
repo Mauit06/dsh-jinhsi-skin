@@ -1,0 +1,46 @@
+{
+  "name": "dsh-jinhsi-skin",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Jinhsi (Wuthering Waves) theme for the DeepSeek Harness web GUI — installs the skin into the Skin Center's user skin directory.",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "skin",
+    "theme",
+    "wuthering-waves",
+    "jinhsi"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mauit06/dsh-jinhsi-skin.git"
+  },
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "skin",
+    "tools/asset-sources.json",
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "README.zh-CN.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "dsh": {
+    "engines": {
+      "dsh": ">=0.1.5-rc.1"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

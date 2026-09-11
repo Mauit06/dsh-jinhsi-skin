@@ -1,0 +1,13 @@
+# dsh-jinhsi-skin bundle patch.
+#
+# 这个包是一个标准的 dsh 主机插件（bundle）：安装方式
+#   dsh plugin --profile web add github:Mauit06/dsh-jinhsi-skin
+# 它的唯一职责是把包内的 skin/ 同步到皮肤中心的用户皮肤目录
+#   $DSH_HOME/skins/jinhsi-spectro/
+# 之后在「设置 → 皮肤中心」里即可试穿/应用。
+#
+# 停用皮肤只需把下面这行改成 disabled: true（profile 层与 home 层都要写，
+# home 层优先级更高），不需要卸载包。
+- insert:
+    - id: ui-skin-jinhsi-spectro
+      name: dsh-jinhsi-skin

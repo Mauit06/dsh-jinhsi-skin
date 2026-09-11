@@ -33,7 +33,7 @@ Set-StrictMode -Version Latest
 # 只对 HTTP 调用单独加 -ErrorAction Stop。
 $ErrorActionPreference = 'Continue'
 
-$Root = $PSScriptRoot
+$Root = Split-Path -Parent $PSScriptRoot   # 脚本在 tools/ 下，仓库根是上一级
 
 function Fail([string]$m) { Write-Host "✗ $m" -ForegroundColor Red; exit 1 }
 function Ok([string]$m)   { Write-Host "✓ $m" -ForegroundColor Green }
