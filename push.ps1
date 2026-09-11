@@ -165,20 +165,36 @@ try {
 
   # ─────────────────────────────────────────────── 推送
   #
-  # 用一次性、带凭据的 URL 推送，**不写进 .git/config**。
-  # git 会把 https://user:pass@host 作为一次性 remote 接受，但直接写 remote 会持久化，
-  # 所以这里用 push <url> 形式：git push <一次性URL> <ref>。
+  # 两个必须处理的坑：
+  #
+  # 1) 凭据助手。Git for Windows 会在**系统级** gitconfig 里设 credential.helper=manager，
+  #    它会抢在 URL 内嵌凭据之前接管认证，在非交互环境下直接失败。
+  #    这里用 `-c credential.helper=`（空值）为这一次调用关掉它。
+  # 2) 分支名。GitHub 新建仓库的默认分支是 main；本地若是 master，推上去会多出一个分支
+  #    而默认分支空置，仓库首页直接 404。这里统一改名成 main。
 
   $branch = git rev-parse --abbrev-ref HEAD
-  if ($branch -eq 'HEAD') { $branch = 'main'; git branch -M main }
+  if ($branch -eq 'master' -or $branch -eq 'HEAD') {
+    $oldBranch = $branch
+    git branch -M main
+    $branch = 'main'
+    Info "本地分支已由 $oldBranch 更名为 main（对齐 GitHub 默认分支）"
+  }
 
   $pushUrl = "https://x-access-token:$token@github.com/$Slug.git"
-  Info "推送到 $Slug（分支 $branch）…"
-  git push $pushUrl "refs/heads/${branch}:refs/heads/${branch}" 2>&1 | ForEach-Object {
-    # git 可能把带 token 的 URL 打进错误输出，这里统一脱敏
-    ($_ -replace [regex]::Escape($token), '***') | Write-Host
+  $prevPrompt = $env:GIT_TERMINAL_PROMPT
+  $env:GIT_TERMINAL_PROMPT = '0'
+  try {
+    Info "推送到 $Slug（分支 $branch）…"
+    git -c credential.helper= -c credential.interactive=false push $pushUrl "refs/heads/${branch}:refs/heads/${branch}" 2>&1 | ForEach-Object {
+      # git 可能把带 token 的 URL 打进输出，统一脱敏
+      ($_ -replace [regex]::Escape($token), '***') | Write-Host
+    }
+    $pushExit = $LASTEXITCODE
+  } finally {
+    $env:GIT_TERMINAL_PROMPT = $prevPrompt
   }
-  if ($LASTEXITCODE -ne 0) { Fail "推送失败（git 退出码 $LASTEXITCODE）" }
+  if ($pushExit -ne 0) { Fail "推送失败（git 退出码 $pushExit）" }
   Ok "已推送"
 
   # 设一个干净的上游，方便以后 git push
