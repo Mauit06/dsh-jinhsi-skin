@@ -3,6 +3,14 @@
 `dsh-jinhsi-skin` 是非官方第三方主题，与库洛游戏（Kuro Games）、DeepSeek
 以及本仓库提到的任何插件作者均无隶属或背书关系。
 
+## 〇、MIT 许可的覆盖范围
+
+仓库根目录的 [LICENSE](LICENSE) 是标准 MIT 文本，覆盖：源码、脚本、样式表、
+文档，以及本仓库自绘的矢量纹样（`crest.svg`、`scales.svg`、`tide.svg`、
+`seal.svg`、`feather.svg`）。
+
+它**不覆盖**《鸣潮》角色美术——本仓库也不分发这部分内容，详见下节。
+
 ## 一、角色与游戏内容
 
 **《鸣潮》/ Wuthering Waves** 及其角色「今汐」、相关名称、美术与设定，
