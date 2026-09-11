@@ -148,11 +148,16 @@ try {
     }
     $body = @{
       name        = $Repo
-      description = '今汐·洄天溯海 — a Jinhsi (Wuthering Waves) theme for the DeepSeek Harness web GUI: declarative skin, pure-CSS decoration, Feixun-style conversation, Wallpaper Engine aware.'
+      description = 'Jinhsi (Wuthering Waves) theme for the DeepSeek Harness web GUI: declarative skin, pure-CSS decoration, Feixun-style conversation, Wallpaper Engine aware.'
       private     = (-not $Public)
       has_issues  = $true
     } | ConvertTo-Json
-    $created = Invoke-RestMethod -Uri 'https://api.github.com/user/repos' -Method Post -Headers $headers -Body $body -ContentType 'application/json' -TimeoutSec 60
+    # 描述保持 ASCII 并显式发 UTF-8 字节：Windows PowerShell 5.1 的 -Body 字符串会按
+    # 本地代码页编码，非 ASCII 内容会被破坏，GitHub 会以 "Problems parsing JSON" 拒绝。
+    $bodyBytes = [System.Text.Encoding]::UTF8.GetBytes($body)
+    $created = Invoke-RestMethod -Uri 'https://api.github.com/user/repos' -Method Post `
+      -Headers $headers -Body $bodyBytes -ContentType 'application/json; charset=utf-8' `
+      -TimeoutSec 60 -ErrorAction Stop
     Ok "远端仓库已创建：$($created.html_url)（$(if ($Public) { 'public' } else { 'private' })）"
   } else {
     Info "远端仓库已存在：$Remote"
