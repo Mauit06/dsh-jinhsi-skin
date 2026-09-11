@@ -366,12 +366,18 @@ body[data-dsh-wallpaper-active][data-ds-dark-theme] {
  *     [data-slot="sidebar.brand.name"]        侧栏左上角的品牌名（fallback 是 "DeepSeek Harness"）
  *     [data-slot="conversation.hero.brand.mark"]  空对话欢迎区的大品牌标记
  *
- * display:contents 的元素自身不生成盒子，所以**不能在它身上加 background/::before**；
- * 但它的子元素照常参与 DOM 组合器，因此这里一律走 `> svg` / `> span` 这种结构化子选择器。
+ * display:contents 的元素自身不生成盒子，所以**不能在它身上加 background/::before**。
+ *
+ * 因此头像一律画在**宿主元素**上（用 `:has(> [data-slot=…])` 结构定位），
+ * 出口里的原始标记整片隐藏。这样做的好处是：
+ * **出口内部到底是 <svg> / <div> / <img>，由官方构建与品牌插件决定，不该成为皮肤的依赖。**
+ * 之前这里写的是 `[data-slot="…"] > svg`，一旦出口里换一种元素，头像就会静默消失。
  * ========================================================================= */
 
 /* 侧栏品牌标记：鲸鱼 → 今汐头像 */
-[data-slot="sidebar.brand.mark"] > svg {
+:has(> [data-slot="sidebar.brand.mark"]) {
+  display: inline-flex;
+  flex: none;
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -384,9 +390,31 @@ body[data-dsh-wallpaper-active][data-ds-dark-theme] {
     0 0 0 4px color-mix(in srgb, var(--jinhsi-jade) 12%, transparent);
 }
 
-/* 藏掉鲸鱼图形本身，保留它 24×24 的盒子作为头像画布 */
+/* 出口里的原始标记（鲸鱼）整片隐藏 */
+[data-slot="sidebar.brand.mark"] > * {
+  display: none !important;
+}
+
+/* 兜底：万一宿主定位没命中（例如出口的父子关系与预期不同），
+   直接在出口内的 svg 上画头像。上面的 `> *` 隐藏的是 display，
+   而这条给 svg 重新设 display 并画图，两者谁生效都不会出现「既没鲸鱼也没头像」。
+   注意 display 必须显式写回来，否则会被上面的 display:none 吃掉。 */
+[data-slot="sidebar.brand.mark"] > svg {
+  display: block !important;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-image: url(assets/jinhsi-head.webp);
+  background-size: 134%;
+  background-position: 50% 30%;
+  background-repeat: no-repeat;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--jinhsi-gold) 68%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--jinhsi-jade) 12%, transparent);
+}
+
 [data-slot="sidebar.brand.mark"] > svg > * {
-  display: none;
+  display: none !important;
 }
 
 /* 侧栏品牌名：DeepSeek Harness → 今汐
@@ -396,17 +424,15 @@ body[data-dsh-wallpaper-active][data-ds-dark-theme] {
  * 156×24 <svg>（产品名字形路径）**。所以这里按 `> svg` 处理，而不是 `> span`。
  * 又因为出口是 display:contents 不能承载伪元素，文字挂到它的宿主 span 上；
  * 宿主用 `span:has(> [data-slot="sidebar.brand.name"])` 结构定位，不碰哈希类名。 */
-[data-slot="sidebar.brand.name"] > svg,
-[data-slot="sidebar.brand.name"] > span,
 [data-slot="sidebar.brand.name"] > * {
   display: none !important;
 }
 
-span:has(> [data-slot="sidebar.brand.name"]) {
+:has(> [data-slot="sidebar.brand.name"]) {
   font-size: 0;
 }
 
-span:has(> [data-slot="sidebar.brand.name"])::after {
+:has(> [data-slot="sidebar.brand.name"])::after {
   content: "今汐";
   font-size: 17px;
   font-weight: 600;
@@ -414,8 +440,10 @@ span:has(> [data-slot="sidebar.brand.name"])::after {
   color: var(--jinhsi-gold);
 }
 
-/* 空对话欢迎区的大品牌标记：同一张脸，放大 */
-[data-slot="conversation.hero.brand.mark"] > svg {
+/* 空对话欢迎区的大品牌标记：同一张脸，放大。同样画在宿主上。 */
+:has(> [data-slot="conversation.hero.brand.mark"]) {
+  display: inline-flex;
+  flex: none;
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -429,8 +457,8 @@ span:has(> [data-slot="sidebar.brand.name"])::after {
     0 6px 22px color-mix(in srgb, var(--jinhsi-ink) 26%, transparent);
 }
 
-[data-slot="conversation.hero.brand.mark"] > svg > * {
-  display: none;
+[data-slot="conversation.hero.brand.mark"] > * {
+  display: none !important;
 }
 
 /* ── 新对话页的抬头文案 ───────────────────────────────────────────────────
