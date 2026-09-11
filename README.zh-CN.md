@@ -29,7 +29,8 @@
   [`tools/asset-sources.json`](tools/asset-sources.json)。
 - 仓库里提交的预览图由 `--placeholder` 模式产出：立绘与头像位置用本项目**自绘**的
   「令尹印」替代，因此主题的结构、配色与装饰依然看得见，但不含任何人的美术素材。
-  素材到位后 `install.ps1` 会在本机重新生成真实预览。
+  `install.ps1` 会用 `--out-dir` 把真实预览**只生成到安装副本里**，于是本仓库的
+  `skin/preview/` 永远是无版权素材的占位版，后续 `git push` 不可能把美术提交上去。
 
 本项目自己创作的部分——代码、样式表、矢量纹样、配色、文档——按 MIT 许可发布。
 完整的权利划分见 [NOTICE](NOTICE)。
@@ -261,7 +262,7 @@ dsh-jinhsi-skin/
 | --- | --- |
 | `tools/fetch-assets.mjs` | 在本机获取官方美术（`--check`、`--force`） |
 | `tools/validate-skin.mjs` | 皮肤 fail-closed 自检；`--self-test` |
-| `tools/make-preview.mjs` | 用 headless Edge/Chrome 渲染预览（`--placeholder`、`--hero`、`--we <图>`） |
+| `tools/make-preview.mjs` | 用 headless Edge/Chrome 渲染预览（`--placeholder`、`--hero`、`--we <图>`、`--out-dir <目录>`） |
 | `tools/extract-jinhsi.mjs` | 从 wuther.in 重建 `corpus/`，含自检断言 |
 | `tools/compose-preset.mjs` | 基于本机 `standard` 预设合成 Agent 预设 |
 | `tools/preview-mock.html` | 壳层静态复刻，供预览与离线调试 |

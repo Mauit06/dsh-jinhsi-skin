@@ -21,7 +21,17 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
 const MOCK = join(ROOT, 'tools', 'preview-mock.html')
-const OUT_DIR = join(ROOT, 'skin', 'preview')
+/**
+ * 预览图输出目录。默认写进仓库的 skin/preview/。
+ *
+ * install.ps1 会传 --out-dir 指向**安装副本**，于是含官方美术的真实预览只出现在
+ * .dsh/skins/ 下，而仓库里的 skin/preview/ 永远停留在不含版权素材的占位版——
+ * 后续 git push 也就不会把美术提交上去。
+ */
+const OUT_DIR = (() => {
+  const i = process.argv.indexOf('--out-dir')
+  return i !== -1 && process.argv[i + 1] ? resolve(process.argv[i + 1]) : join(ROOT, 'skin', 'preview')
+})()
 
 const arg = (name, fallback) => {
   const i = process.argv.indexOf(`--${name}`)

@@ -125,18 +125,8 @@ $(($missingAssets | ForEach-Object { "       - $_" }) -join "`n")
   Write-Host '✓ 官方美术已就绪' -ForegroundColor Green
 }
 
-# 仓库里提交的 preview 是「不含官方美术」的占位版；素材刚到位时重生成真实预览。
-# 失败不影响安装（占位预览同样可用），只提示。
-if ($assetsFetchedNow) {
-  Write-Host ''
-  Write-Host '重新生成预览图（让皮肤中心卡片显示真实效果）…' -ForegroundColor DarkGray
-  & node (Join-Path $Root 'tools\make-preview.mjs') *> $null
-  if ($LASTEXITCODE -eq 0) {
-    Write-Host '✓ 预览图已按真实素材重新生成' -ForegroundColor Green
-  } else {
-    Write-Host '· 预览图重生成跳过（未找到 Edge/Chrome 或渲染失败），继续使用随包的占位预览' -ForegroundColor DarkGray
-  }
-}
+# 预览图重生成放在「复制到安装目录之后」——见下方安装段落。
+# 这里只记录素材是否是本次获取的，用于决定要不要重生成。
 
 # ───────────────────────────────────────────────────────── manifest 安全标记
 
@@ -225,6 +215,17 @@ try {
     $createdSkin = $true
     Write-Host ''
     Write-Host "✓ 皮肤已安装：$InstalledSkin" -ForegroundColor Green
+
+    # 仓库里的 preview 是「不含官方美术」的占位版。这里只给**安装副本**重生成真实预览，
+    # 仓库目录保持干净 —— 否则下次 git push 会把含官方美术的预览图提交上去。
+    # 无条件尝试（素材此时必定已就位），失败不影响安装，只提示。
+    Write-Host '  为安装副本重新生成预览图…' -ForegroundColor DarkGray
+    & node (Join-Path $Root 'tools\make-preview.mjs') --out-dir (Join-Path $InstalledSkin 'preview') *> $null
+    if ($LASTEXITCODE -eq 0) {
+      Write-Host '  ✓ 安装副本的预览图已按真实素材重新生成' -ForegroundColor Green
+    } else {
+      Write-Host '  · 预览图重生成跳过（未找到 Edge/Chrome 或渲染失败），继续使用随包的占位预览' -ForegroundColor DarkGray
+    }
   }
 
   if ($WithPersona -or $PersonaOnly) {

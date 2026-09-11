@@ -30,10 +30,12 @@ public repository would mean redistributing protected assets, so instead:
 - [`tools/fetch-assets.mjs`](tools/fetch-assets.mjs) downloads them **on your machine** at
   install time, from wuther.in's static asset CDN. Sources and sha256 anchors live in
   [`tools/asset-sources.json`](tools/asset-sources.json).
-- The preview images committed here are generated in `--placeholder` mode: the portrait and
-  avatar slots are filled with this project's **own** *Magistrate's Seal* SVG, so the
+- The preview images committed here are generated in `--placeholder` mode: the portrait
+  and avatar slots are filled with this project's **own** *Magistrate's Seal* SVG, so the
   theme's structure, palette and ornament stay visible without shipping anyone's art.
-  `install.ps1` regenerates the real previews locally once the assets are in place.
+  `install.ps1` regenerates the real previews **into the installed copy only**
+  (`--out-dir`), so this repository's `skin/preview/` stays art-free and a later
+  `git push` can never commit copyrighted material.
 
 Everything this project actually authored — code, stylesheets, vector ornaments, palette,
 documentation — is MIT licensed. See [NOTICE](NOTICE) for the full rights breakdown.
@@ -289,7 +291,7 @@ dsh-jinhsi-skin/
 | --- | --- |
 | `tools/fetch-assets.mjs` | Fetch the official artwork locally (`--check`, `--force`) |
 | `tools/validate-skin.mjs` | Fail-closed skin validation; `--self-test` |
-| `tools/make-preview.mjs` | Render previews via headless Edge/Chrome (`--placeholder`, `--hero`, `--we <img>`) |
+| `tools/make-preview.mjs` | Render previews via headless Edge/Chrome (`--placeholder`, `--hero`, `--we <img>`, `--out-dir <dir>`) |
 | `tools/extract-jinhsi.mjs` | Rebuild `corpus/` from wuther.in, with self-checks |
 | `tools/compose-preset.mjs` | Compose the agent preset from the local `standard` preset |
 | `tools/preview-mock.html` | Static shell replica used for previews and offline iteration |
