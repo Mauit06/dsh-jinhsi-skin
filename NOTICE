@@ -62,6 +62,11 @@
 - **深海女仆工坊（maid-atelier）**（作者 Small-tailqwq）— 其皮肤目录结构
   （`skin.json` + `skin.css` + `patches.css` + `assets/` + `preview/`
   + `LICENSE` + `NOTICE`）是本仓库布局的参照。
+- **[dsh-deep-whale](https://github.com/Small-tailqwq/dsh-deep-whale)**（作者 Small-tailqwq）
+  — DSH 皮肤**打包与分发形态**的参照：本仓库的 `package.json` + `cordis.patch.yml` +
+  `dsh.bundle.patch` 接线方式，以及 `skin.json` 与插件包并存的目录约定，
+  均参照该项目。同样未复制其任何代码或资源。
+  其皮肤工程脚手架来自 [zhu1090093659/dsh-web-ui](https://github.com/zhu1090093659/dsh-web-ui)。
 
 ## 五、设计参照与独立性声明
 
