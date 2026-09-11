@@ -18,6 +18,10 @@ param(
   # 从哪个用户环境变量读取 token
   [string]$TokenVar = 'GH_TOKEN',
 
+  # HTTP 代理。省略时自动读取系统代理（Invoke-RestMethod 会用它，但 git 不会——
+  # 这正是「API 能通、git push 超时」最常见的原因）
+  [string]$Proxy,
+
   # 只做检查，不提交也不推送
   [switch]$DryRun
 )
@@ -53,6 +57,27 @@ if ($null -eq $token) {
 Info "token 来源：$tokenFrom（长度 $($token.Length)，不打印内容）"
 
 $headers = @{ Authorization = "Bearer $token"; 'User-Agent' = 'dsh-jinhsi-skin'; Accept = 'application/vnd.github+json' }
+
+# ─────────────────────────────────────────────── 代理
+#
+# Invoke-RestMethod 走 WinINET/.NET 的系统代理，git 不读那个设置。
+# 于是会出现「API 调用正常、git push 却连不上 github.com:443」。
+# 这里读出系统代理并显式传给 git（只用于本次调用，不写进任何配置）。
+
+if ([string]::IsNullOrWhiteSpace($Proxy)) {
+  $ie = Get-ItemProperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' -ErrorAction SilentlyContinue
+  if ($null -ne $ie -and $ie.ProxyEnable -eq 1 -and -not [string]::IsNullOrWhiteSpace($ie.ProxyServer)) {
+    $Proxy = $ie.ProxyServer
+  }
+}
+$gitProxyArgs = @()
+if (-not [string]::IsNullOrWhiteSpace($Proxy)) {
+  if ($Proxy -notmatch '^https?://') { $Proxy = "http://$Proxy" }
+  $gitProxyArgs = @('-c', "http.proxy=$Proxy", '-c', "https.proxy=$Proxy")
+  Info "使用代理：$Proxy（仅本次调用，不写入 git 配置）"
+} else {
+  Info '未检测到系统代理，git 直连'
+}
 
 try {
   $me = Invoke-RestMethod -Uri 'https://api.github.com/user' -Headers $headers -TimeoutSec 30 -ErrorAction Stop
@@ -186,7 +211,7 @@ try {
   $env:GIT_TERMINAL_PROMPT = '0'
   try {
     Info "推送到 $Slug（分支 $branch）…"
-    git -c credential.helper= -c credential.interactive=false push $pushUrl "refs/heads/${branch}:refs/heads/${branch}" 2>&1 | ForEach-Object {
+    git -c credential.helper= -c credential.interactive=false @gitProxyArgs push $pushUrl "refs/heads/${branch}:refs/heads/${branch}" 2>&1 | ForEach-Object {
       # git 可能把带 token 的 URL 打进输出，统一脱敏
       ($_ -replace [regex]::Escape($token), '***') | Write-Host
     }
