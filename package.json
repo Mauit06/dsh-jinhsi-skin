@@ -1,6 +1,6 @@
 {
   "name": "dsh-jinhsi-skin",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": true,
   "type": "module",
   "description": "今汐·洄天溯海 —— DeepSeek Harness Web GUI 的《鸣潮》今汐皮肤插件：把皮肤装进用户皮肤目录。想用壁纸时，可选依赖皮肤中心（@linxin666/dsh-client-ui-skin-center）提供渲染与壁纸能力。",

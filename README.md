@@ -6,7 +6,7 @@ A **Jinhsi (今汐)** theme for the **DeepSeek Harness** web GUI — silver-whit
 gold filigree and mint teal, with tidal meanders and dragon scales along the frame, a
 Jinhsi avatar on the sidebar brand and every assistant message, and a conversation styled
 after the game's Feixun (飞讯) messenger. The backdrop is **official Kuro artwork of Jinhsi**
-(light: the official 「洄天溯海」 full-body character art; dark: the 「寒盡覺春生」 convene key visual).
+(light: the official 「洄天溯海」 full-body character art; dark: the official Jinhsi key art with the dragon).
 
 This is a **skin plugin**: installing it places the skin into
 `$DSH_HOME/skins/jinhsi-spectro/`.

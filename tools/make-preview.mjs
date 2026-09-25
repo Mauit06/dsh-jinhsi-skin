@@ -138,7 +138,7 @@ const DARK_EXPRESSION = `(() => {
   document.body.setAttribute('data-ds-dark-theme', '');
   const img = document.querySelector('[data-dsh-skin-layer="background"] > img');
   const scrim = document.querySelector('[data-dsh-skin-layer="background"] > div');
-  if (img) img.src = '../skin/assets/jinhsi-art-dark.jpg';
+  if (img) img.src = '../skin/assets/jinhsi-art-dark.png';
   if (scrim) scrim.style.background = 'linear-gradient(90deg, rgba(10,13,17,0.96) 0%, rgba(10,13,17,0.88) 30%, rgba(12,18,24,0.56) 56%, rgba(12,18,24,0.14) 80%, rgba(12,18,24,0) 100%)';
   return document.body.hasAttribute('data-ds-dark-theme');
 })()`

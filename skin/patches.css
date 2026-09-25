@@ -26,7 +26,7 @@
 }
 
 /* 背景媒体由皮肤中心渲染成一层满幅 <img>（内联 cover），这里按主题改定位。
-   深色是整幅唤取主视觉，浅色是官方抠好的全身立绘，两者排法不同。 */
+   深色是整幅官方全身美术，浅色是官方抠好的全身立绘，两者排法不同。 */
 [data-dsh-skin-layer="background"] > img {
   object-fit: cover !important;
   object-position: 66% 50% !important;
@@ -36,11 +36,11 @@
   filter: none !important;
 }
 
-/* 深色那张是「寒盡覺春生」唤取主视觉：今汐在中偏右，标题字在左侧，
-   往右收一点，让标题落在侧栏与纱幕之下；夜戏本身偏暗，提一档亮度让它读得出来。 */
+/* 深色那张是官方今汐全身美术（龙影，无任何文字 / 卡池 UI）：今汐居中，
+   整幅构图平衡，直接居中铺满；暗底提一档亮度让龙与衣纹读得出来。 */
 body[data-ds-dark-theme] [data-dsh-skin-layer="background"] > img {
-  object-position: 62% 50% !important;
-  filter: brightness(1.32) saturate(1.05) !important;
+  object-position: 50% 50% !important;
+  filter: brightness(1.24) saturate(1.04) !important;
 }
 
 /* 浅色那张是官方「洄天溯海」全身立绘（今汐本人，透明底），不是整幅插画：

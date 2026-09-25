@@ -5,11 +5,11 @@
   "license": "角色美术 © Kuro Games（库洛游戏）。仅限本机个人使用，不得再分发。",
   "assets": [
     {
-      "file": "jinhsi-art-dark.jpg",
-      "url": "https://hw-media-cdn-mingchao.kurogame.com/akiwebsite/website2.0/images/1737388800000/aozne5p7mmaxt6lyt3-1737441830731.jpeg",
-      "sha256": "43659003cd69d0dd2e26d14fa3d5111ba1d3045b108638afa580fbb5f49b407a",
-      "role": "深色主题背景：库洛官方「寒盡覺春生」角色活動喚取主视觉（今汐）1920×1080",
-      "source": "https://wutheringwaves.kurogames.com/zh-tw/main/news/detail/2027"
+      "file": "jinhsi-art-dark.png",
+      "url": "https://wutheringwaves.kurogames.com/static4.0/assets/jinxi-0e048c86.png",
+      "sha256": "0e048c86979129d5302697502ab1d1c279ef9be6934bc63c571eda2d9a46303d",
+      "role": "深色主题背景：官方今汐全身美术（龙影环绕，无任何文字 / 卡池 UI）1300×1018",
+      "source": "https://wutheringwaves.kurogames.com/zh-tw/main/role"
     },
     {
       "file": "jinhsi-head.webp",
