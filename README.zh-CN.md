@@ -47,6 +47,10 @@ dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center@0.3.24
 > 与 peer dependency 都是）。DSH `0.1.5-rc.x` 请装 `@0.3.24`——它是最后一个声明
 > `>= 0.1.5-rc.1` 的版本。loader 只把 engines 当提示、不做硬校验，所以新皮肤中心装到老
 > 宿主上不会报错，只会在运行时表现异常。
+>
+> 本仓库已在 **DSH `0.1.7-rc.2` + 皮肤中心 `0.4.2`** 上实测通过（catalog warnings 为空、
+> 内置动态壁纸背景照常挂载、控制台 0 错误）；完整矩阵与验证记录见
+> [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md)。
 
 > 一个 profile 里只应有一个皮肤中心实例。如果已经有别处挂了皮肤中心
 > （例如 `@linxin666/dsh-web-all` 里的 `web-ui-skin-center`），把其中一份关掉：

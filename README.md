@@ -51,6 +51,10 @@ dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center@0.3.24
 > (both `dsh.engines` and the peer dependency). On DSH `0.1.5-rc.x`, install `@0.3.24` — the
 > last release whose range is `>= 0.1.5-rc.1`. The loader treats the engine field as advisory,
 > so a newer Skin Center on an older host installs cleanly and can only misbehave at runtime.
+>
+> Verified here on **DSH `0.1.7-rc.2` + Skin Center `0.4.2`**: the catalog reports no
+> warnings, the bundled animated backdrop still mounts, and the console stays clean — the
+> full matrix and evidence are in [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md).
 
 > A profile should hold exactly one Skin Center instance. If one is already mounted
 > elsewhere (for example `web-ui-skin-center` from `@linxin666/dsh-web-all`), disable one of

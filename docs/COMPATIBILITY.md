@@ -12,7 +12,7 @@ This page records the working version combinations and the one version boundary 
 | 宿主 DSH | 皮肤中心 @linxin666/dsh-client-ui-skin-center | 皮肤 skinManifestVersion | 状态 |
 | --- | --- | --- | --- |
 | >= 0.1.5-rc.1 | 0.3.23 / 0.3.24 | 2 | 支持（本仓库验证：0.1.5-rc.2 + 0.3.24） |
-| >= 0.1.7-rc.1 | 0.3.25 … 0.4.x | 2 | 支持（皮肤中心自身要求，未在本机验证） |
+| >= 0.1.7-rc.1 | 0.3.25 … 0.4.x | 2 | 支持（本仓库验证：0.1.7-rc.2 + 0.4.2） |
 | 0.1.5-rc.x | >= 0.3.25 | 2 | **不要这样装**：皮肤中心要求 dsh >= 0.1.7-rc.1 |
 
 ## 必须钉住的那一条
@@ -34,8 +34,11 @@ dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center
 dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center@0.3.24
 ~~~
 
-本插件的 peer 范围是 ^0.3.23（即 >=0.3.23 <0.4.0），**同时覆盖两者**——同一个范围在新老宿主上
-都成立，所以版本选择只能由安装者按宿主 DSH 决定，插件无法用一条 semver 表达。
+皮肤中心 **0.3.25** 起就要求宿主 `>=0.1.7-rc.1`，**0.4.0** 又抬了一个大版本；原来的
+`^0.3.23`（即 `>=0.3.23 <0.4.0`）只覆盖到 0.3.x，装 0.4.2 时这个范围已经匹配不上。
+所以本插件的 peer 范围写成 `^0.3.23 || ^0.4.0`——两个大版本都覆盖，同一个范围在新老宿主上
+都成立，版本选择只能由安装者按宿主 DSH 决定，插件无法用一条 semver 表达。皮肤中心再抬一个
+大版本（`0.5`）时，这里要跟着放宽。
 
 > DSH 0.1.5-rc.2 的 loader **不硬校验** dsh.engines（dsh-app-boot 与 dsh-package-manifest
 > 都不读这个字段）。因此把新版皮肤中心装到老宿主上**不会**启动即报错，只会运行时表现异常。
@@ -49,6 +52,21 @@ dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center@0.3.24
   全部 200（stylesheet / patches 过皮肤中心的 CSS 安全管线）。
 - 无头 Edge 打开带 token 的 GUI：html[data-dsh-skin="jinhsi-spectro"]，6 个
   [data-dsh-skin-layer]，--dsw-alias-brand-primary 等 token 已被皮肤重映射，控制台 0 错误。
+- node tools/validate-skin.mjs：官方 JSON Schema 通过、lightningcss 解析通过、对比度全达标。
+- node tools/verify-standalone.mjs：插件契约自检全部通过。
+
+## 本机验证结论（DSH 0.1.7-rc.2 + 皮肤中心 0.4.2）
+
+- dsh web 以新增 bundle 启动，日志无解析 / 挂载错误。
+- GET `/api/skin-center/v2/catalog` 收录 jinhsi-spectro（v1.4.0，origin=user，warnings 为空）。
+- `stylesheet`（30,586 B）、`patches`（32,753 B）、`assets/jinhsi-quiet.mp4`
+  （3,401,815 B，`content-type: video/mp4`）、`preview/light.jpg` 全部 200；
+  stylesheet / patches 过皮肤中心的 CSS 安全管线。
+- 无头 Edge 打开带 token 的 GUI：`html[data-dsh-skin="jinhsi-spectro"]`、6 个
+  `[data-dsh-skin-layer]`，皮肤的 `--jinhsi-ink` / `--jinhsi-gold` / `--jinhsi-porcelain`
+  均已生效，控制台 0 错误。
+- 背景层仍按 v2 契约挂上内置动态壁纸（`[data-dsh-skin-layer="background"] > video` 计数 1）。
+- 官方 token 快照从 278 项涨到 299 项，`patches.css` 用到的 `--dsw-*` 仍全部在册。
 - node tools/validate-skin.mjs：官方 JSON Schema 通过、lightningcss 解析通过、对比度全达标。
 - node tools/verify-standalone.mjs：插件契约自检全部通过。
 
