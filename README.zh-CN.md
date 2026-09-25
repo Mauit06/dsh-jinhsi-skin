@@ -29,7 +29,11 @@ dsh plugin --profile web add github:Mauit06/dsh-jinhsi-skin
 装不装由你决定：
 
 ```powershell
+# DSH >= 0.1.7-rc.1 —— 装最新版皮肤中心
 dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center
+
+# DSH 0.1.5-rc.x —— 锁 0.3.24（0.3.25 起要求 DSH >= 0.1.7-rc.1）
+dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center@0.3.24
 ```
 
 - **装上它**：多出「设置 → 皮肤中心」，可以试穿 / 应用皮肤、拖背景遮蔽滑杆，
@@ -38,6 +42,11 @@ dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center
   项目合集文件夹加进「手动文件夹」当成壁纸库。
 - **不装它**：皮肤照常同步到皮肤目录，静置等待渲染器；如果你 profile 里已经有
   别的皮肤中心，也就不必再装。
+
+> **版本提示。** 皮肤中心 `0.3.25` 起要求 `@deepseek-ai/dsh >= 0.1.7-rc.1`（`dsh.engines`
+> 与 peer dependency 都是）。DSH `0.1.5-rc.x` 请装 `@0.3.24`——它是最后一个声明
+> `>= 0.1.5-rc.1` 的版本。loader 只把 engines 当提示、不做硬校验，所以新皮肤中心装到老
+> 宿主上不会报错，只会在运行时表现异常。
 
 > 一个 profile 里只应有一个皮肤中心实例。如果已经有别处挂了皮肤中心
 > （例如 `@linxin666/dsh-web-all` 里的 `web-ui-skin-center`），把其中一份关掉：
@@ -49,7 +58,7 @@ dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center
 dsh plugin --profile web remove dsh-jinhsi-skin
 ```
 
-需要 DSH ≥ `0.1.5-rc.1` 与 Node.js 22+。
+需要 DSH ≥ `0.1.5-rc.1` 与 Node.js 22+。DSH < `0.1.7-rc.1` 时，皮肤中心请锁 `@0.3.24`（见上）。
 
 ## 壁纸与背景
 

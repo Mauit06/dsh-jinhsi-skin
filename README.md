@@ -31,7 +31,11 @@ plugin declares the Skin Center `@linxin666/dsh-client-ui-skin-center` as an **o
 dependency**: whether to install it is your call.
 
 ```powershell
+# DSH >= 0.1.7-rc.1 — latest Skin Center
 dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center
+
+# DSH 0.1.5-rc.x — pin 0.3.24 (0.3.25 and later require DSH >= 0.1.7-rc.1)
+dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center@0.3.24
 ```
 
 - **With it**: you get *Settings → Skin Center*, where you can try on / apply the skin, drag
@@ -42,6 +46,11 @@ dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center
   renderer. If your profile already has a Skin Center from somewhere else, you don't need a
   second one.
 
+> **Version note.** Skin Center `0.3.25` and later declare `@deepseek-ai/dsh >= 0.1.7-rc.1`
+> (both `dsh.engines` and the peer dependency). On DSH `0.1.5-rc.x`, install `@0.3.24` — the
+> last release whose range is `>= 0.1.5-rc.1`. The loader treats the engine field as advisory,
+> so a newer Skin Center on an older host installs cleanly and can only misbehave at runtime.
+
 > A profile should hold exactly one Skin Center instance. If one is already mounted
 > elsewhere (for example `web-ui-skin-center` from `@linxin666/dsh-web-all`), disable one of
 > them: two live instances register duplicate `/api/skin-center/*` routes and mount the skin
@@ -49,7 +58,7 @@ dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center
 
 To remove: `dsh plugin --profile web remove dsh-jinhsi-skin`
 
-Requires DSH ≥ `0.1.5-rc.1` and Node.js 22+.
+Requires DSH ≥ `0.1.5-rc.1` and Node.js 22+. On DSH < `0.1.7-rc.1`, pin Skin Center `@0.3.24` (see the version note above).
 
 ## Wallpaper and background
 
