@@ -1,9 +1,9 @@
 {
   "name": "dsh-jinhsi-skin",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "private": true,
   "type": "module",
-  "description": "今汐·洄天溯海 —— DeepSeek Harness Web GUI 的《鸣潮》今汐皮肤插件：把皮肤装进用户皮肤目录。想用壁纸时，可选依赖皮肤中心（@linxin666/dsh-client-ui-skin-center）提供渲染与壁纸能力。",
+  "description": "今汐·洄天溯海 —— DeepSeek Harness Web GUI 的《鸣潮》今汐皮肤插件：把皮肤装进用户皮肤目录，内置动态壁纸「今汐——安静」作背景。想用别的壁纸（Wallpaper Engine / 手动媒体）时，可选依赖皮肤中心（@linxin666/dsh-client-ui-skin-center）提供渲染能力。",
   "keywords": [
     "dsh",
     "dsh-plugin",

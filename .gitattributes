@@ -10,6 +10,8 @@
 *.png binary
 *.webp binary
 *.gif binary
+*.mp4 binary
+*.webm binary
 
 # 统计里不计入
 docs/* linguist-documentation

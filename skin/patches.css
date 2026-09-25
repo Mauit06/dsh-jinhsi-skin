@@ -12,7 +12,7 @@
  * @keyframes 一律加 jinhsi- 前缀，避免跨皮肤撞名。
  * ========================================================================= */
 
-/* ── 背景层：氛围底色 + 立绘定位 ────────────────────────────────────────── */
+/* ── 背景层：氛围底色 + 底图定位 ────────────────────────────────────────── */
 
 [data-dsh-skin-layer="background"] {
   background-color: var(--jinhsi-porcelain);
@@ -25,35 +25,38 @@
       color-mix(in srgb, var(--jinhsi-ice) 28%, var(--jinhsi-porcelain)) 100%);
 }
 
-/* 背景媒体由皮肤中心渲染成一层满幅 <img>（内联 cover），这里按主题改定位。
-   深色是整幅官方全身美术，浅色是官方抠好的全身立绘，两者排法不同。 */
-[data-dsh-skin-layer="background"] > img {
+/* 背景媒体由皮肤中心渲染成一层满幅 <img> / <video>（内联 cover），这里改定位。
+   亮暗两套共用同一张动态壁纸「今汐——安静」（1920×1080 循环动画）：
+   底图完全一致，差异只在遮罩与滤镜——这才是「统一应用」。 */
+[data-dsh-skin-layer="background"] > img,
+[data-dsh-skin-layer="background"] > video {
   object-fit: cover !important;
-  object-position: 66% 50% !important;
+  object-position: 50% 44% !important;
   box-sizing: border-box !important;
   padding: 0 !important;
   opacity: 1 !important;
   filter: none !important;
+  display: block !important;
 }
 
-/* 深色那张是官方今汐全身美术（龙影，无任何文字 / 卡池 UI）：今汐居中，
-   整幅构图平衡，直接居中铺满；暗底提一档亮度让龙与衣纹读得出来。 */
-body[data-ds-dark-theme] [data-dsh-skin-layer="background"] > img {
-  object-position: 50% 50% !important;
-  filter: brightness(1.24) saturate(1.04) !important;
+/* 深色主题：这张动图是亮调的樱花原画，直接铺会把墨色面板照穿。
+   压一档亮度、收一点饱和，让它沉进墨底；正文一侧仍由下面的遮罩托住。
+   注意 skin.json 里两套 scrim 也各自不同，滤镜与遮罩是配套的。 */
+body[data-ds-dark-theme] [data-dsh-skin-layer="background"] > img,
+body[data-ds-dark-theme] [data-dsh-skin-layer="background"] > video {
+  object-position: 50% 42% !important;
+  filter: brightness(0.88) saturate(1.03) contrast(1.01) !important;
 }
 
-/* 浅色那张是官方「洄天溯海」全身立绘（今汐本人，透明底），不是整幅插画：
-   改成 contain，把整身立绘立在右侧的瓷白底上，左侧留给侧栏与正文；
-   立绘本身是亮色，不需要提亮。 */
-body:not([data-ds-dark-theme]) [data-dsh-skin-layer="background"] > img {
-  object-fit: contain !important;
-  object-position: 100% 50% !important;
-  filter: none !important;
+/* 浅色主题：原画本身就是亮调，不需要提亮；把对比压平一点，
+   免得发丝与花瓣的高光和瓷白面板糊在一起。 */
+body:not([data-ds-dark-theme]) [data-dsh-skin-layer="background"] > img,
+body:not([data-ds-dark-theme]) [data-dsh-skin-layer="background"] > video {
+  filter: brightness(1.02) contrast(0.95) !important;
 }
 
-/* 遮罩随皮肤中心的「背景遮蔽」滑杆变浓：滑杆值越大，插画被压得越实。
-   整幅插画比立绘花，所以下限抬到 0.55，正文任何时候都有底。 */
+/* 遮罩随皮肤中心的「背景遮蔽」滑杆变浓：滑杆值越大，底图被压得越实。
+   满幅原画比立绘花，所以下限抬到 0.55，正文任何时候都有底。 */
 [data-dsh-skin-layer="background"] > div {
   opacity: calc(0.55 + var(--dsw-skin-scrim, 0) * 0.45) !important;
 }
@@ -305,8 +308,9 @@ body[data-dsh-wallpaper-active] [data-dsh-skin-layer="background"] {
   background-image: none !important;
 }
 
-/* 兜底：控制器清内容与这段 CSS 生效之间若有瞬时差，别闪出立绘或旧遮罩 */
+/* 兜底：控制器清内容与这段 CSS 生效之间若有瞬时差，别闪出底图或旧遮罩 */
 body[data-dsh-wallpaper-active] [data-dsh-skin-layer="background"] > img,
+body[data-dsh-wallpaper-active] [data-dsh-skin-layer="background"] > video,
 body[data-dsh-wallpaper-active] [data-dsh-skin-layer="background"] > div {
   display: none !important;
 }

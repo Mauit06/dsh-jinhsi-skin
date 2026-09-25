@@ -161,24 +161,23 @@ const shipped = [
   ['contributes.patches', manifest?.contributes?.patches],
   ['preview.light', manifest?.preview?.light],
   ['preview.dark', manifest?.preview?.dark],
+  // v1.4.0 起背景媒体也是随包分发的（动态壁纸导出件，见 NOTICE），
+  // 所以它和样式表一样必须在包里 —— 别的机器装了不能没有底图。
+  ['backgroundMedia.light.src', manifest?.contributes?.backgroundMedia?.light?.src],
+  ['backgroundMedia.dark.src', manifest?.contributes?.backgroundMedia?.dark?.src],
 ]
 for (const [label, rel] of shipped) {
   check(`${label} → ${rel ?? '(缺失)'}`,
     typeof rel === 'string' && rel !== '' && existsSync(join(skinSrc, rel)))
 }
 
-// 运行期取回的文件（官方插画/头像，版权归库洛游戏，不随包分发）：
-// 只要求 manifest 引用得对、且来源表里有它；包内没有是**预期**，不是缺陷。
-const runtimeFetched = [
-  ['backgroundMedia.light.src', manifest?.contributes?.backgroundMedia?.light?.src],
-  ['backgroundMedia.dark.src', manifest?.contributes?.backgroundMedia?.dark?.src],
-]
-for (const [label, rel] of runtimeFetched) {
-  const base = typeof rel === 'string' ? rel.split('/').pop() : ''
-  const known = (sources?.assets ?? []).some((a) => a.file === base)
-  check(`${label} → ${rel ?? '(缺失)'}（由来源表在安装时取回）`,
-    typeof rel === 'string' && rel !== '' && known,
-    existsSync(join(skinSrc, rel ?? '')) ? '包内已自带' : '包内不带，安装时从官方站点取回')
+// 运行期取回的文件（官方头像等，版权归库洛游戏，不随包分发）：
+// 只要求来源表里有它、安装时能落到 skin/assets/；包内没有是**预期**，不是缺陷。
+for (const asset of sources?.assets ?? []) {
+  check(`来源表 ${asset.file}（安装时取回）`,
+    typeof asset.file === 'string' && asset.file !== ''
+      && (typeof asset.url === 'string' || typeof asset.path === 'string'),
+    asset.optional === true ? '备用，缺失无害' : '必需')
 }
 if (manifest?.version !== undefined) {
   note('皮肤内容版本', `v${manifest.version}（改动皮肤内容时才需要提升；插件版本看 package.json v${pkg.version}）`)

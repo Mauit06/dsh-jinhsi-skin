@@ -9,18 +9,25 @@
 文档，以及本仓库自绘的矢量纹样（`crest.svg`、`scales.svg`、`tide.svg`、
 `seal.svg`、`feather.svg`）。
 
-它**不覆盖**《鸣潮》角色美术——本仓库也不分发这部分内容，详见下节。
+它**不覆盖**《鸣潮》角色美术，也不覆盖包内附带的动态壁纸
+（`skin/assets/jinhsi-quiet.mp4`）——那部分的来源与权利见下节。
 
 ## 一、角色与游戏内容
 
 **《鸣潮》/ Wuthering Waves** 及其角色「今汐」、相关名称、美术与设定，
 版权归 **库洛游戏（Kuro Games）** 所有。本仓库：
 
-- **不分发**任何官方美术文件。`skin/assets/*.webp` 已被 `.gitignore` 排除。
-- 由 `tools/fetch-assets.mjs` 在**使用者本机**从第三方站点 wuther.in 的静态资源
-  CDN 获取这些文件，来源与完整性锚点记录在 `tools/asset-sources.json`。
-- 随仓库分发的预览图（`skin/preview/`、`docs/`）为 `--placeholder` 模式产出，
-  **不含官方美术**：立绘与头像位置以本仓库自绘的令尹印替代。
+- **不分发**官方角色美术文件：`skin/assets/*.webp`、`*.png`、`*.jpg` 已被
+  `.gitignore` 排除。头像由 `tools/fetch-assets.mjs`（以及插件 `lib/index.js`）在
+  **使用者本机**从第三方站点 wuther.in 的静态资源 CDN 获取，来源与完整性锚点记录在
+  `tools/asset-sources.json`。
+- **唯一例外**是背景动态壁纸 `skin/assets/jinhsi-quiet.mp4`：它是 Wallpaper Engine
+  创意工坊 item 3606711102「今汐——安静」的导出件，画面为官方今汐美术（© 库洛游戏），
+  场景工程归壁纸原作者。这份壁纸没有可下载的官方地址，本仓库把它随包分发，只为让主题
+  在任意机器上都有底图；除它之外不再分发任何官方素材。它同样**不在 MIT 许可覆盖范围内**。
+- 随仓库分发的预览图（`skin/preview/`）自 v1.4.0 起由这张真实底图渲染，因此包含上述
+  美术；需要不含版权素材的版本时用 `node tools/make-preview.mjs --placeholder`
+  覆盖生成。
 
 **使用者请注意**：在本机获取到的官方美术仅供个人使用，不得再分发或商用。
 相关权利与许可完全由库洛游戏决定，本仓库的 MIT 许可不覆盖这部分内容。
@@ -86,9 +93,12 @@
 ## 六、Wallpaper Engine
 
 Wallpaper Engine 及其创意工坊内容归 **Wallpaper Engine 作者与各壁纸原作者**
-所有。本主题**不包含**任何壁纸文件；适配层只是一段 CSS，用于在壁纸挂载时让出
-背景层并保证正文可读。本机验证用的对照图（`we-adaptation.jpg`）含第三方壁纸，
-已被 `.gitignore` 排除，不进仓库。
+所有。适配层只是一段 CSS，用于在**别的**壁纸挂载时让出背景层并保证正文可读。
+
+包内**附带**一份壁纸导出件 `skin/assets/jinhsi-quiet.mp4`（创意工坊 item
+3606711102「今汐——安静」），仅作本主题的内置背景随主题分发：画面版权归库洛游戏，
+场景工程归原作者。除此之外不含任何壁纸文件。本机验证用的对照图
+（`we-adaptation.jpg`）含第三方壁纸，已被 `.gitignore` 排除，不进仓库。
 
 ## 七、可选依赖：皮肤中心（未复制其代码）
 

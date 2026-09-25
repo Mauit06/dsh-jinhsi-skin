@@ -5,8 +5,9 @@
 A **Jinhsi (今汐)** theme for the **DeepSeek Harness** web GUI — silver-white, ink black,
 gold filigree and mint teal, with tidal meanders and dragon scales along the frame, a
 Jinhsi avatar on the sidebar brand and every assistant message, and a conversation styled
-after the game's Feixun (飞讯) messenger. The backdrop is **official Kuro artwork of Jinhsi**
-(light: the official 「洄天溯海」 full-body character art; dark: the official Jinhsi key art with the dragon).
+after the game's Feixun (飞讯) messenger. The backdrop is the **animated wallpaper 「今汐——安静」**
+(Jinhsi — Quiet) that ships with the theme: a 1920×1080 loop, one and the same image for the
+light and dark variants, adapted only by a scrim and a filter each.
 
 This is a **skin plugin**: installing it places the skin into
 `$DSH_HOME/skins/jinhsi-spectro/`.
@@ -91,29 +92,36 @@ references exists; and the sync is idempotent, never wipes artwork already fetch
 machine, and re-fetches when a sha256 no longer matches (a failed fetch only warns and never
 empties an existing file). Runs in a temporary `DSH_SKINS_HOME`, no network.
 
-## Official artwork is not redistributed
+## Where the artwork and the wallpaper come from
 
-The character and illustrations are © **Kuro Games**. This repository ships none of them:
-`skin/assets/*.webp` and `*.jpg` are git-ignored, and the plugin fetches them on **your**
-machine from Kuro's official site / asset CDN at install time (sources, roles and sha256
-anchors in [`tools/asset-sources.json`](tools/asset-sources.json)). The two previews above
-are **placeholders** (`tools/make-preview.mjs --placeholder`): the layout and palette are
-real, but the character and avatar slots use this project's own seal SVG instead of official
-art. On your own machine you can generate real previews with
-`node tools/make-preview.mjs --out-dir <skin dir>/preview`. Full rights breakdown:
-[NOTICE](NOTICE).
+The **avatar** (`skin/assets/jinhsi-head.webp`) is © **Kuro Games** and is *not* shipped: the
+`skin/assets/*.webp` and `*.jpg` patterns are git-ignored, and the plugin fetches them on
+**your** machine from Kuro's official site / asset CDN at install time (sources, roles and
+sha256 anchors in [`tools/asset-sources.json`](tools/asset-sources.json)).
+
+The **background wallpaper** (`skin/assets/jinhsi-quiet.mp4`, 1920×1080, 8 s, H.264) is the
+exception: it **ships with the package**. There is no downloadable official copy of it — it
+only ever existed as a local export — so without it an install would have no backdrop at all.
+It comes from Wallpaper Engine Workshop item `3606711102`「今汐——安静」: the picture is
+official Jinhsi artwork (© Kuro Games), the scene project belongs to its Workshop author.
+Sources and full rights breakdown: [NOTICE](NOTICE).
+
+The `skin/preview/*.jpg` committed here are rendered from that real backdrop;
+regenerate art-free versions with `node tools/make-preview.mjs --placeholder` if you need
+them.
 
 ## What you get
 
-- Light and dark themes; the palette is sampled from the artwork, and the backdrop is
-  official Kuro artwork of Jinhsi
+- Light and dark themes; the palette is sampled from the artwork, and the backdrop is the
+  bundled animated wallpaper (a single image shared by both variants)
 - Six fixed decoration layers, filled with **CSS only** — no client JavaScript of its own
 - Sidebar brand and every assistant message carry a Jinhsi avatar; the new-session headline
   becomes 「桃夭灼灼牵丝动 漂泊者」
 - Feixun-style conversation: assistant "letter" cards, jade user bubbles with a tail
 - State projection is pure CSS too (`:has()` reading attributes the official shell already
   sets): a gold sweep while streaming, mint pulse on tool calls, vermilion on turn errors
-- Wallpaper (Wallpaper Engine or manual media) comes with the optional Skin Center
+- Want a different backdrop? The wallpaper panel (Wallpaper Engine or manual media) comes
+  with the optional Skin Center; a mounted wallpaper always wins over the bundled one
 
 ## Notes
 
@@ -127,7 +135,8 @@ art. On your own machine you can generate real previews with
 
 - **Kuro Games** — *Wuthering Waves* and Jinhsi, plus the official artwork and avatar used
   here (taken from the [official website](https://wutheringwaves.kurogames.com/zh-tw/main/news)
-  and in-game official resources, fetched locally and never redistributed).
+  and in-game official resources; the avatar is fetched locally and never redistributed, the
+  picture inside the bundled wallpaper is theirs too — see [NOTICE](NOTICE)).
 - **[@linxin666/dsh-client-ui-skin-center](https://github.com/zhu1090093659/dsh-web)**
   (by zhu1090093659 / linxin666, Apache-2.0) — the Skin Center: the v2 skin contract, the six
   decoration layers, semantic-attribute stamping, the occlusion and blur sliders, and the
@@ -144,8 +153,10 @@ art. On your own machine you can generate real previews with
 - **Blue Fantasy (blue-fantasy)** — the Skin Center's built-in skin, reference for the
   `--dsw-skin-scrim` coupling and decoration-layer usage.
 - **Wallpaper Engine** and its Workshop content belong to their authors and the original
-  wallpaper artists; this theme ships no wallpaper files, only a CSS adaptation that yields
-  the backdrop and keeps text readable.
+  wallpaper artists. The bundled wallpaper 「今汐——安静」 is an export of Workshop item
+  3606711102 and is redistributed here solely as this theme's backdrop (the picture is
+  © Kuro Games); there is also a CSS adaptation that yields to any other wallpaper and keeps
+  text readable.
 
 Unofficial fan project; not affiliated with or endorsed by any of the above.
 

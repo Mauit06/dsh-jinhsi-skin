@@ -132,14 +132,13 @@ async function openTarget(port) {
   throw new Error('无法创建 CDP target')
 }
 
-/** 深色变体：切 body 属性并换用深色插画与遮罩。
- *  这两个值必须与 skin.json 的 backgroundMedia.dark 保持一致。 */
+/** 深色变体：切 body 属性并换成深色遮罩。
+ *  底图从 v1.4.0 起亮暗共用（skin.json 里两套都指向同一段 video），所以只换遮罩；
+ *  这个值必须与 skin.json 的 backgroundMedia.dark.scrim 保持一致。 */
 const DARK_EXPRESSION = `(() => {
   document.body.setAttribute('data-ds-dark-theme', '');
-  const img = document.querySelector('[data-dsh-skin-layer="background"] > img');
   const scrim = document.querySelector('[data-dsh-skin-layer="background"] > div');
-  if (img) img.src = '../skin/assets/jinhsi-art-dark.png';
-  if (scrim) scrim.style.background = 'linear-gradient(90deg, rgba(10,13,17,0.96) 0%, rgba(10,13,17,0.88) 30%, rgba(12,18,24,0.56) 56%, rgba(12,18,24,0.14) 80%, rgba(12,18,24,0) 100%)';
+  if (scrim) scrim.style.background = 'linear-gradient(90deg, rgba(10,13,17,0.97) 0%, rgba(10,13,17,0.9) 28%, rgba(12,18,24,0.6) 54%, rgba(12,18,24,0.16) 78%, rgba(12,18,24,0) 100%)';
   return document.body.hasAttribute('data-ds-dark-theme');
 })()`
 

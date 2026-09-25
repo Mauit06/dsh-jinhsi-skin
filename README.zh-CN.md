@@ -4,8 +4,8 @@
 
 面向 **DeepSeek Harness** Web GUI 的《鸣潮》**今汐**主题——银白、墨黑、金线、薄荷青，
 边框是潮汐回纹与龙鳞纹，侧栏品牌与助手消息是今汐头像，对话界面仿游戏里的**飞讯**。
-背景用**库洛官方的今汐美术**（亮色：官方「洄天溯海」全身立绘；
-深色：官方今汐全身美术·龙影）。
+背景是随主题分发的**动态壁纸「今汐——安静」**——1920×1080 循环动画，
+亮暗两套共用同一张底图，只用遮罩与滤镜分别适配。
 
 这是一个**皮肤插件**：装上它，皮肤就进了 `$DSH_HOME/skins/jinhsi-spectro/`。
 
@@ -85,24 +85,31 @@ node tools/verify-standalone.mjs
 引用的文件齐全；同步幂等、不会抹掉本机已取回的官方美术、sha256 对不上时会重新获取
 （取不到也只告警，不会把已有文件删空）。全程在临时 `DSH_SKINS_HOME` 里跑，不联网。
 
-## 官方美术不随仓库分发
+## 美术与壁纸的来源
 
-角色与插画版权归**库洛游戏**所有。仓库里**没有**这些文件：`skin/assets/*.webp`
-与 `*.jpg` 已被 git 忽略，由插件在安装时于**你的机器上**从库洛官方站点 / 资源 CDN
-取回（来源、角色说明与 sha256 锚点见 [`tools/asset-sources.json`](tools/asset-sources.json)）。
-上面两张预览图是「占位版」（`tools/make-preview.mjs --placeholder`）：结构与配色真实，
-但立绘与头像位置用的是本项目自绘的令尹印，不含官方素材；装到本机后可以用
-`node tools/make-preview.mjs --out-dir <皮肤目录>/preview` 生成含官方美术的真实预览。
-完整权利声明见 [NOTICE](NOTICE)。
+**头像**（`skin/assets/jinhsi-head.webp`）版权归**库洛游戏**所有，仓库里**没有**：
+`skin/assets/*.webp` 与 `*.jpg` 已被 git 忽略，由插件在安装时于**你的机器上**从库洛
+官方站点 / 资源 CDN 取回（来源、角色说明与 sha256 锚点见
+[`tools/asset-sources.json`](tools/asset-sources.json)）。
+
+**背景动态壁纸**（`skin/assets/jinhsi-quiet.mp4`，1920×1080 / 8 秒 / H.264）
+是个例外：它**随包分发**。壁纸只有本机导出件、没有可下载的官方地址，不带它别的机器
+装上皮肤就没有底图。它取自 Wallpaper Engine 创意工坊 item `3606711102`「今汐——安静」
+（画面是《鸣潮》官方今汐美术，版权归库洛游戏；场景工程归壁纸原作者），出处与权利声明见
+[NOTICE](NOTICE)。
+
+仓库里提交的 `skin/preview/*.jpg` 就是用这张真实底图渲染的实际效果；
+需要「不含版权素材」的版本时跑 `node tools/make-preview.mjs --placeholder` 覆盖生成。
 
 ## 有什么
 
-- 浅色 / 深色双主题，配色从角色立绘**取样**而来；背景是库洛官方的今汐插画
+- 浅色 / 深色双主题，配色从角色立绘**取样**而来；背景是内置的动态壁纸（亮暗共用一张底图）
 - 六个固定装饰层，皮肤本体**全部用 CSS 填充**，没有一行自己的客户端 JavaScript
 - 侧栏品牌与每条助手消息都带今汐头像；新对话页抬头变成「桃夭灼灼牵丝动 漂泊者」
 - 飞讯式对话：助手侧「来信」卡片，用户侧青玉气泡带尖角
 - 状态投影也是纯 CSS（`:has()` 读官方壳层已有属性）：流式中顶线走金、工具调用转薄荷青、出错转朱砂
-- 壁纸（Wallpaper Engine / 手动媒体）随可选的皮肤中心一起来，见上文
+- 想换别的背景：壁纸面板（Wallpaper Engine / 手动媒体）随可选的皮肤中心一起来；
+  壁纸一旦挂载就会盖过内置的动态壁纸，见上文
 
 ## 说明
 
@@ -112,9 +119,9 @@ node tools/verify-standalone.mjs
 
 ## 致谢
 
-- **库洛游戏（Kuro Games）**——《鸣潮》与今汐，以及本主题使用的官方插画、立绘与头像
-  （取自 [《鸣潮》官方网站](https://wutheringwaves.kurogames.com/zh-tw/main/news) 与游戏内官方资源，
-  仅在本机取回、不再分发）。
+- **库洛游戏（Kuro Games）**——《鸣潮》与今汐，以及本主题使用的官方插画与头像
+  （取自 [《鸣潮》官方网站](https://wutheringwaves.kurogames.com/zh-tw/main/news) 与游戏内官方资源；
+  头像仅在本机取回，动态壁纸的画面版权亦归库洛，随主题分发的说明见 [NOTICE](NOTICE)）。
 - **[@linxin666/dsh-client-ui-skin-center](https://github.com/zhu1090093659/dsh-web)**
   （作者 zhu1090093659 / linxin666，Apache-2.0）——皮肤中心：v2 皮肤契约、六个装饰层、
   语义属性盖章、遮蔽与模糊滑杆，以及 Wallpaper Engine 桥与壁纸面板。没有它，
@@ -128,8 +135,9 @@ node tools/verify-standalone.mjs
   本主题未复制其任何代码或资源，状态投影改用纯 CSS 的 `:has()` 独立实现。
 - **蓝色幻想（blue-fantasy）**——皮肤中心的内置皮肤，是本主题 `--dsw-skin-scrim`
   联动与装饰层用法的参照。
-- **Wallpaper Engine** 及其创意工坊内容归其作者与各壁纸原作者所有；本主题不包含
-  任何壁纸文件，只有一段让位与可读性适配的 CSS。
+- **Wallpaper Engine** 及其创意工坊内容归其作者与各壁纸原作者所有。本主题内置的
+  动态壁纸「今汐——安静」是创意工坊 item 3606711102 的导出件，版权归其原作者与
+  库洛游戏，仅作本主题的背景随主题分发；此外还有一段让位与可读性适配的 CSS。
 
 非官方粉丝作品，与上述各方均无隶属或背书关系。
 
