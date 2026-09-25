@@ -89,3 +89,28 @@ Wallpaper Engine 及其创意工坊内容归 **Wallpaper Engine 作者与各壁�
 所有。本主题**不包含**任何壁纸文件；适配层只是一段 CSS，用于在壁纸挂载时让出
 背景层并保证正文可读。本机验证用的对照图（`we-adaptation.jpg`）含第三方壁纸，
 已被 `.gitignore` 排除，不进仓库。
+
+## 七、可选依赖：皮肤中心（未复制其代码）
+
+皮肤是纯声明式资产目录，需要有**渲染器**才会显示。本包把
+**[@linxin666/dsh-client-ui-skin-center](https://github.com/zhu1090093659/dsh-web)**
+（作者 zhu1090093659 / linxin666，**Apache-2.0**）声明为 **optional peer dependency**：
+装不装由使用者决定，本包不在 `dependencies` 里替使用者做这个决定。
+
+```powershell
+dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center
+```
+
+- 装上它就有「设置 → 皮肤中心」的试穿 / 应用、装饰层、背景遮蔽与模糊滑杆，以及
+  **壁纸**（Wallpaper Engine 桥 + 手动媒体文件夹）。
+- 本包**没有复制**该项目的任何源码或资源，也没有替它插 patch 行——它自己就是一个
+  dsh bundle，装它会插自己那一行。反过来，本包的 `cordis.patch.yml` **故意不引用**
+  它：包没装时若留着一行解析不到的条目，dsh 启动是 fail-loud 的，会把 GUI 拖垮。
+- 同一 profile 内只应有一个皮肤中心实例；如已有别处提供的皮肤中心，把其中一份关掉。
+- **遥测披露**：该依赖的浏览器半区每个 UTC 日向 `dsh-market.com` 发送一次匿名安装
+  心跳（仅一个 localStorage 随机 ID 与本包名，无其他数据；服务端只存加盐哈希，
+  不存 IP）。**本皮肤本体不发任何数据、不联网**。介意的话按域名拦截即可，
+  皮肤功能不受影响。
+- 该依赖的另一条已知限制：插件运行时写入的内联样式只能经 L3 `!important` 补丁覆盖。
+
+

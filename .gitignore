@@ -1,5 +1,5 @@
 # --- 官方美术：版权归库洛游戏，本仓库不再分发 -------------------------------
-# 这些文件由 tools/fetch-assets.mjs 在安装时从 wuther.in 的静态资源 CDN 本地获取。
+# 这些文件由插件（lib/index.js）在安装时从库洛官方站点 / 资源 CDN 本地取回。
 # 来源与 sha256 锚点见 tools/asset-sources.json。
 skin/assets/*.webp
 skin/assets/*.png

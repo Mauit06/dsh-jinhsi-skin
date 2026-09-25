@@ -1,14 +1,15 @@
 {
   "name": "dsh-jinhsi-skin",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Jinhsi (Wuthering Waves) theme for the DeepSeek Harness web GUI — installs the skin into the Skin Center's user skin directory.",
+  "description": "今汐·洄天溯海 —— DeepSeek Harness Web GUI 的《鸣潮》今汐皮肤插件：把皮肤装进用户皮肤目录。想用壁纸时，可选依赖皮肤中心（@linxin666/dsh-client-ui-skin-center）提供渲染与壁纸能力。",
   "keywords": [
     "dsh",
     "dsh-plugin",
     "skin",
     "theme",
+    "wallpaper",
     "wuthering-waves",
     "jinhsi"
   ],
@@ -27,6 +28,7 @@
     "cordis.patch.yml",
     "skin",
     "tools/asset-sources.json",
+    "tools/verify-standalone.mjs",
     "LICENSE",
     "NOTICE",
     "README.md",
@@ -34,6 +36,14 @@
   ],
   "engines": {
     "node": ">=22"
+  },
+  "peerDependencies": {
+    "@linxin666/dsh-client-ui-skin-center": "^0.3.23"
+  },
+  "peerDependenciesMeta": {
+    "@linxin666/dsh-client-ui-skin-center": {
+      "optional": true
+    }
   },
   "dsh": {
     "engines": {

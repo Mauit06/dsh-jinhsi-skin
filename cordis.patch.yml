@@ -1,13 +1,35 @@
-# dsh-jinhsi-skin bundle patch.
+# dsh-jinhsi-skin bundle patch —— 只做一件事：把皮肤放进用户皮肤目录。
 #
-# 这个包是一个标准的 dsh 主机插件（bundle）：安装方式
+# 安装：
 #   dsh plugin --profile web add github:Mauit06/dsh-jinhsi-skin
-# 它的唯一职责是把包内的 skin/ 同步到皮肤中心的用户皮肤目录
-#   $DSH_HOME/skins/jinhsi-spectro/
-# 之后在「设置 → 皮肤中心」里即可试穿/应用。
 #
-# 停用皮肤只需把下面这行改成 disabled: true（profile 层与 home 层都要写，
-# home 层优先级更高），不需要卸载包。
+# 本 patch 只插一行：
+#   ui-skin-jinhsi-spectro  把包内的 skin/ 同步到
+#                           $DSH_HOME/skins/jinhsi-spectro/，
+#                           皮肤中心（或别的渲染器）从那里发现皮肤。
+#
+# ── 可选依赖：皮肤中心（渲染器 + 壁纸） ────────────────────────────────────
+# 皮肤本身是纯声明式资产目录，需要**渲染器**才会显示。本插件把
+# @linxin666/dsh-client-ui-skin-center 声明为 **optional peer dependency**：
+# 装不装由你决定。想要「设置 → 皮肤中心」的试穿/应用、背景遮蔽滑杆与壁纸
+# （Wallpaper Engine 桥 + 手动媒体文件夹）就装上它：
+#
+#   dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center
+#
+# 它自己就是一个 dsh bundle，装它会插自己那一行，所以**这里不重复插**——
+# 这里若也插一行、而包又没装，dsh 启动时会因为解析不到而 fail-loud。
+# 不装它：皮肤照样会同步到 $DSH_HOME/skins/jinhsi-spectro/，静置等待渲染器。
+#
+# ⚠️ 一个 profile 里只应有一个皮肤中心实例。如果你的 profile 里已经有别的地方
+#    挂着皮肤中心（例如 @linxin666/dsh-web-all 里的 web-ui-skin-center），
+#    就不要再装第二个；已经有的话，把其中一行关掉即可：
+#
+#        - id: web-ui-skin-center
+#          disabled: true
+#
+#    两份同时活着会重复注册 /api/skin-center/* 路由并重复挂载皮肤控制器。
+#
+# 停用皮肤：把下面那行改成 disabled: true。
 - insert:
     - id: ui-skin-jinhsi-spectro
       name: dsh-jinhsi-skin

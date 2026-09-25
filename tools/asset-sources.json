@@ -1,26 +1,42 @@
 {
-  "$comment": "官方美术的来源与完整性锚点。这些文件**不随仓库分发**（版权归库洛游戏），由 tools/fetch-assets.mjs 在安装时从下列地址获取到 skin/assets/。sha256 用于校验来源未变，不匹配时仅告警不阻断。",
+  "$comment": "官方美术的来源与完整性锚点。这些文件**不随仓库分发**（版权归库洛游戏），由插件在安装时取到 skin/assets/。sha256 用于校验来源未变，不匹配时仅告警不阻断。path 相对 cdn；需要别的站点时用绝对 url 覆盖。",
   "cdn": "https://wutherin.cn-nb1.rains3.com",
-  "page": "https://wuther.in/zh/character/1304/",
+  "page": "https://wutheringwaves.kurogames.com/zh-tw/main/news/detail/5253",
   "license": "角色美术 © Kuro Games（库洛游戏）。仅限本机个人使用，不得再分发。",
   "assets": [
     {
-      "file": "jinhsi-pile.webp",
-      "path": "/UI/UIResources/Common/Image/IconRolePile/T_IconRole_Pile_jinxi_UI.webp",
-      "sha256": "a9c291903e5f91dd73f4abeb06959f51324fb841dcab3947d2a70abbc678a21e",
-      "role": "浅色主题背景立绘（半身，洄天溯海）"
+      "file": "jinhsi-art-light.jpg",
+      "url": "https://hw-media-cdn-mingchao.kurogame.com/object/1786291200000/235x6lw61bdjgzi838-1786328245890.jpg",
+      "sha256": "70a321f5becdf0f91c0f280b489fc14252e93c77c3bf9c78158b73075f38e0be",
+      "role": "浅色主题背景：库洛官方桌布分享《雲青青兮欲雨，水澹澹兮生煙》1920×1080",
+      "source": "https://wutheringwaves.kurogames.com/zh-tw/main/news/detail/5253"
     },
     {
-      "file": "jinhsi-activity.webp",
-      "path": "/UI/UIResources/Common/Image/PixActivity/T_ActivityRoleJinxi.webp",
-      "sha256": "2e3448ea00ae576beb6880ba3a449e9a6f86e3d1b523c0baff3d72d4a08461fe",
-      "role": "深色主题背景立绘（全身，洄天溯海）"
+      "file": "jinhsi-art-dark.jpg",
+      "url": "https://hw-media-cdn-mingchao.kurogame.com/akiwebsite/website2.0/images/1737388800000/aozne5p7mmaxt6lyt3-1737441830731.jpeg",
+      "sha256": "43659003cd69d0dd2e26d14fa3d5111ba1d3045b108638afa580fbb5f49b407a",
+      "role": "深色主题背景：库洛官方「寒盡覺春生」角色活動喚取主视觉（今汐）1920×1080",
+      "source": "https://wutheringwaves.kurogames.com/zh-tw/main/news/detail/2027"
     },
     {
       "file": "jinhsi-head.webp",
       "path": "/UI/UIResources/Common/Image/IconRoleHead256/T_IconRoleHead256_24_UI.webp",
       "sha256": "027d51f758dfc58b603da336ea5e9aaa739ff7a64c12f92d7daffa45a1d9fb71",
       "role": "头像（侧栏品牌、助手消息、新对话页抬头）"
+    },
+    {
+      "file": "jinhsi-pile.webp",
+      "path": "/UI/UIResources/Common/Image/IconRolePile/T_IconRole_Pile_jinxi_UI.webp",
+      "sha256": "a9c291903e5f91dd73f4abeb06959f51324fb841dcab3947d2a70abbc678a21e",
+      "role": "备用：立绘半身（洄天溯海），需要时手动取用",
+      "optional": true
+    },
+    {
+      "file": "jinhsi-activity.webp",
+      "path": "/UI/UIResources/Common/Image/PixActivity/T_ActivityRoleJinxi.webp",
+      "sha256": "2e3448ea00ae576beb6880ba3a449e9a6f86e3d1b523c0baff3d72d4a08461fe",
+      "role": "备用：立绘全身（洄天溯海），需要时手动取用",
+      "optional": true
     },
     {
       "file": "jinhsi-pile-peach.webp",

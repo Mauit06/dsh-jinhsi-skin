@@ -25,25 +25,28 @@
       color-mix(in srgb, var(--jinhsi-ice) 28%, var(--jinhsi-porcelain)) 100%);
 }
 
-/* 立绘：贴底、contain 保比例，横向落在「对话区右缘」附近，避开右侧详情列。
-   加载器写入的是 cover 全幅内联样式，必须 !important 覆盖。 */
+/* 背景是库洛官方的整幅插画（不是抠好的立绘），因此整幅铺满：cover + 全幅，
+   不缩边、不加投影。加载器写入的是 cover 全幅内联样式，这里只做定点与微调。 */
 [data-dsh-skin-layer="background"] > img {
-  object-fit: contain !important;
-  object-position: 70% 100% !important;
+  object-fit: cover !important;
+  object-position: 66% 50% !important;
   box-sizing: border-box !important;
-  padding: 5vh 0 0 3vw !important;
-  opacity: 0.98 !important;
-  filter: drop-shadow(-16px 0 32px color-mix(in srgb, var(--jinhsi-ink) 18%, transparent)) !important;
+  padding: 0 !important;
+  opacity: 1 !important;
+  filter: none !important;
 }
 
-/* 深色用的是全身立绘（更长），再往右挪一点，避免压住正文。 */
+/* 深色那张是「寒盡覺春生」唤取主视觉：今汐在中偏右，标题字在左侧，
+   往右收一点，让标题落在侧栏与纱幕之下；夜戏本身偏暗，提一档亮度让它读得出来。 */
 body[data-ds-dark-theme] [data-dsh-skin-layer="background"] > img {
-  object-position: 80% 100% !important;
+  object-position: 62% 50% !important;
+  filter: brightness(1.32) saturate(1.05) !important;
 }
 
-/* 遮罩随皮肤中心的「背景遮蔽」滑杆变浓：滑杆值越大，立绘被压得越暗。 */
+/* 遮罩随皮肤中心的「背景遮蔽」滑杆变浓：滑杆值越大，插画被压得越实。
+   整幅插画比立绘花，所以下限抬到 0.55，正文任何时候都有底。 */
 [data-dsh-skin-layer="background"] > div {
-  opacity: calc(0.5 + var(--dsw-skin-scrim, 0) * 0.5) !important;
+  opacity: calc(0.55 + var(--dsw-skin-scrim, 0) * 0.45) !important;
 }
 
 /* ── 环境层：衍射微光 + 令尹印水印 ──────────────────────────────────────── */

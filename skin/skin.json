@@ -4,10 +4,10 @@
   "id": "jinhsi-spectro",
   "name": "今汐·洄天溯海",
   "nameEn": "Jinhsi · Tidal Resurgence",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Mauit06",
   "tagline": "今州令尹 · 银白墨黑与金线 · 潮汐龙鳞 · 仿飞讯对话",
-  "description": "《鸣潮》今州令尹今汐的主题：银白、墨黑、淡青与金线构成可随亮/暗切换的界面覆盖层，潮汐回纹与龙鳞纹铺在固定装饰层上，令尹印与朱砂闲章作点缀。侧栏品牌与助手消息换成今汐头像，对话形态仿《鸣潮》飞讯。角色立绘垫在半透明面板之下，背景遮蔽滑杆直接生效。纯声明式皮肤，不携带任何可执行代码。",
+  "description": "《鸣潮》今州令尹今汐的主题：银白、墨黑、淡青与金线构成可随亮/暗切换的界面覆盖层，潮汐回纹与龙鳞纹铺在固定装饰层上，令尹印与朱砂闲章作点缀。侧栏品牌与助手消息换成今汐头像，对话形态仿《鸣潮》飞讯。背景是库洛官方的今汐插画（亮：官方桌布分享《雲青青兮欲雨，水澹澹兮生煙》；暗：「寒盡覺春生」角色活動喚取主视觉），垫在半透明面板之下，背景遮蔽滑杆直接生效。纯声明式皮肤，不携带任何可执行代码。",
   "tags": [
     "wuthering-waves",
     "jinhsi",
@@ -15,15 +15,16 @@
     "magistrate",
     "gold",
     "porcelain",
-    "feixun"
+    "feixun",
+    "official-art"
   ],
   "accent": "#c9a227",
   "order": 21,
-  "license": "MIT（代码 / 样式 / 自绘纹样）。角色美术版权归库洛游戏所有，不随本皮肤分发，由安装脚本在本机获取，仅限个人使用。",
+  "license": "MIT（代码 / 样式 / 自绘纹样）。角色与插画版权归库洛游戏所有，不随本皮肤分发，由插件在安装时于本机从官方站点取回，仅限个人使用。",
   "licenseUrl": "https://github.com/Mauit06/dsh-jinhsi-skin/blob/main/LICENSE",
   "noticeUrl": "https://github.com/Mauit06/dsh-jinhsi-skin/blob/main/NOTICE",
   "sourceUrl": "https://github.com/Mauit06/dsh-jinhsi-skin",
-  "attribution": "角色美术 © Kuro Games · 由安装脚本从 wuther.in 本机获取；纹样、配色与代码原创（MIT）",
+  "attribution": "插画与头像 © Kuro Games（库洛游戏），取自《鸣潮》官方网站的官方壁纸 / 档案公开，由插件在本机取回；纹样、配色与代码原创（MIT）",
   "preview": {
     "light": "preview/light.jpg",
     "dark": "preview/dark.jpg"
@@ -34,12 +35,12 @@
     "backgroundMedia": {
       "light": {
         "type": "image",
-        "src": "assets/jinhsi-pile.webp",
+        "src": "assets/jinhsi-art-light.jpg",
         "scrim": "linear-gradient(90deg, rgba(244,247,250,0.96) 0%, rgba(244,247,250,0.87) 30%, rgba(242,246,249,0.52) 56%, rgba(238,244,248,0.12) 80%, rgba(238,244,248,0) 100%)"
       },
       "dark": {
         "type": "image",
-        "src": "assets/jinhsi-activity.webp",
+        "src": "assets/jinhsi-art-dark.jpg",
         "scrim": "linear-gradient(90deg, rgba(10,13,17,0.96) 0%, rgba(10,13,17,0.88) 30%, rgba(12,18,24,0.56) 56%, rgba(12,18,24,0.14) 80%, rgba(12,18,24,0) 100%)"
       }
     }

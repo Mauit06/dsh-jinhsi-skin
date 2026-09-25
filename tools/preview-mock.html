@@ -139,13 +139,13 @@
   .stat span { color: var(--dsw-alias-label-tertiary); }
 </style>
 <script>
-  /* mock 专用（皮肤本身不含任何 JS）：?theme=dark 切到深色并换用深色立绘与遮罩。 */
+  /* mock 专用（皮肤本身不含任何 JS）：?theme=dark 切到深色并换用深色插画与遮罩。 */
   (function () {
     if (new URLSearchParams(location.search).get('theme') !== 'dark') return
     document.body.setAttribute('data-ds-dark-theme', '')
     var img = document.querySelector('[data-dsh-skin-layer="background"] > img')
     var scrim = document.querySelector('[data-dsh-skin-layer="background"] > div')
-    if (img) img.src = '../skin/assets/jinhsi-activity.webp'
+    if (img) img.src = '../skin/assets/jinhsi-art-dark.jpg'
     if (scrim) scrim.style.background = 'linear-gradient(90deg, rgba(10,13,17,0.96) 0%, rgba(10,13,17,0.88) 30%, rgba(12,18,24,0.56) 56%, rgba(12,18,24,0.14) 80%, rgba(12,18,24,0) 100%)'
   })()
 </script>
@@ -155,7 +155,7 @@
 <!-- ── 皮肤中心提供的 6 个固定装饰层（内联样式与 decoration-layers.ts 一致） ── -->
 <div data-dsh-skin-layer="background" aria-hidden="true"
      style="position:fixed;top:0;right:0;bottom:0;left:0;z-index:-2;pointer-events:none;will-change:transform;">
-  <img src="../skin/assets/jinhsi-pile.webp" alt="" aria-hidden="true"
+  <img src="../skin/assets/jinhsi-art-light.jpg" alt="" aria-hidden="true"
        style="position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;object-fit:cover;">
   <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(90deg, rgba(244,247,250,0.94) 0%, rgba(244,247,250,0.62) 34%, rgba(238,244,248,0.12) 68%, rgba(238,244,248,0) 100%);"></div>
 </div>
@@ -234,7 +234,7 @@
               <p>已按 <code>skin-manifest-v2</code> 契约接好：皮肤是纯资产目录，装饰全部落在皮肤中心提供的六个固定层上。</p>
               <blockquote>「四时有序，万物有常，是为天之道。」</blockquote>
               <ul>
-                <li>背景层承载立绘，遮罩随「背景遮蔽」滑杆联动；</li>
+                <li>背景层铺库洛官方今汐插画，遮罩随「背景遮蔽」滑杆联动；</li>
                 <li>顶／底／侧三层铺金线与龙鳞纹；</li>
                 <li>身份层走官方 slot 出口，把鲸鱼换成今汐头像。</li>
               </ul>
@@ -242,10 +242,10 @@
 ├─ skin.json      清单（fail-closed 校验）
 ├─ skin.css       L1 token + L2 语义层
 ├─ patches.css    L3 装饰层 · 状态投影 · WE 适配 · 身份层
-└─ assets/        立绘与自绘纹样</pre>
+└─ assets/        官方插画与自绘纹样</pre>
               <table class="md-table">
                 <tr><th>层</th><th>z-index</th><th>用途</th></tr>
-                <tr><td>background</td><td>-2</td><td>立绘与氛围底</td></tr>
+                <tr><td>background</td><td>-2</td><td>官方插画与氛围底</td></tr>
                 <tr><td>ambient</td><td>30</td><td>衍射微光、令尹印水印</td></tr>
                 <tr><td>foreground</td><td>41</td><td>四角回纹与暗角</td></tr>
               </table>
