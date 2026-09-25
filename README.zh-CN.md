@@ -4,7 +4,7 @@
 
 面向 **DeepSeek Harness** Web GUI 的《鸣潮》**今汐**主题——银白、墨黑、金线、薄荷青，
 边框是潮汐回纹与龙鳞纹，侧栏品牌与助手消息是今汐头像，对话界面仿游戏里的**飞讯**。
-背景用**库洛官方的今汐插画**（亮色：官方桌布分享《雲青青兮欲雨，水澹澹兮生煙》；
+背景用**库洛官方的今汐美术**（亮色：官方「洄天溯海」全身立绘；
 深色：「寒盡覺春生」角色活動喚取主视觉）。
 
 这是一个**皮肤插件**：装上它，皮肤就进了 `$DSH_HOME/skins/jinhsi-spectro/`。
@@ -112,9 +112,9 @@ node tools/verify-standalone.mjs
 
 ## 致谢
 
-- **库洛游戏（Kuro Games）**——《鸣潮》与今汐，以及本主题使用的官方插画与头像
-  （取自 [《鸣潮》官方网站](https://wutheringwaves.kurogames.com/zh-tw/main/news) 的
-  官方桌布分享与角色档案，仅在本机取回、不再分发）。
+- **库洛游戏（Kuro Games）**——《鸣潮》与今汐，以及本主题使用的官方插画、立绘与头像
+  （取自 [《鸣潮》官方网站](https://wutheringwaves.kurogames.com/zh-tw/main/news) 与游戏内官方资源，
+  仅在本机取回、不再分发）。
 - **[@linxin666/dsh-client-ui-skin-center](https://github.com/zhu1090093659/dsh-web)**
   （作者 zhu1090093659 / linxin666，Apache-2.0）——皮肤中心：v2 皮肤契约、六个装饰层、
   语义属性盖章、遮蔽与模糊滑杆，以及 Wallpaper Engine 桥与壁纸面板。没有它，

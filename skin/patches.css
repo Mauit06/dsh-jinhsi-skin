@@ -25,8 +25,8 @@
       color-mix(in srgb, var(--jinhsi-ice) 28%, var(--jinhsi-porcelain)) 100%);
 }
 
-/* 背景是库洛官方的整幅插画（不是抠好的立绘），因此整幅铺满：cover + 全幅，
-   不缩边、不加投影。加载器写入的是 cover 全幅内联样式，这里只做定点与微调。 */
+/* 背景媒体由皮肤中心渲染成一层满幅 <img>（内联 cover），这里按主题改定位。
+   深色是整幅唤取主视觉，浅色是官方抠好的全身立绘，两者排法不同。 */
 [data-dsh-skin-layer="background"] > img {
   object-fit: cover !important;
   object-position: 66% 50% !important;
@@ -41,6 +41,15 @@
 body[data-ds-dark-theme] [data-dsh-skin-layer="background"] > img {
   object-position: 62% 50% !important;
   filter: brightness(1.32) saturate(1.05) !important;
+}
+
+/* 浅色那张是官方「洄天溯海」全身立绘（今汐本人，透明底），不是整幅插画：
+   改成 contain，把整身立绘立在右侧的瓷白底上，左侧留给侧栏与正文；
+   立绘本身是亮色，不需要提亮。 */
+body:not([data-ds-dark-theme]) [data-dsh-skin-layer="background"] > img {
+  object-fit: contain !important;
+  object-position: 100% 50% !important;
+  filter: none !important;
 }
 
 /* 遮罩随皮肤中心的「背景遮蔽」滑杆变浓：滑杆值越大，插画被压得越实。

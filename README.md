@@ -6,7 +6,7 @@ A **Jinhsi (今汐)** theme for the **DeepSeek Harness** web GUI — silver-whit
 gold filigree and mint teal, with tidal meanders and dragon scales along the frame, a
 Jinhsi avatar on the sidebar brand and every assistant message, and a conversation styled
 after the game's Feixun (飞讯) messenger. The backdrop is **official Kuro artwork of Jinhsi**
-(light: the official wallpaper 《雲青青兮欲雨，水澹澹兮生煙》; dark: the 「寒盡覺春生」 convene key visual).
+(light: the official 「洄天溯海」 full-body character art; dark: the 「寒盡覺春生」 convene key visual).
 
 This is a **skin plugin**: installing it places the skin into
 `$DSH_HOME/skins/jinhsi-spectro/`.
@@ -125,10 +125,9 @@ art. On your own machine you can generate real previews with
 
 ## Credits
 
-- **Kuro Games** — *Wuthering Waves* and Jinhsi, plus the official illustrations and avatar
-  used here (taken from the official wallpaper shares and character files on the
-  [official website](https://wutheringwaves.kurogames.com/zh-tw/main/news), fetched locally
-  and never redistributed).
+- **Kuro Games** — *Wuthering Waves* and Jinhsi, plus the official artwork and avatar used
+  here (taken from the [official website](https://wutheringwaves.kurogames.com/zh-tw/main/news)
+  and in-game official resources, fetched locally and never redistributed).
 - **[@linxin666/dsh-client-ui-skin-center](https://github.com/zhu1090093659/dsh-web)**
   (by zhu1090093659 / linxin666, Apache-2.0) — the Skin Center: the v2 skin contract, the six
   decoration layers, semantic-attribute stamping, the occlusion and blur sliders, and the
