@@ -40,14 +40,14 @@
 - 样式表：`skin/skin.css`、`skin/patches.css`
 - 自绘矢量纹样：`skin/assets/crest.svg`、`scales.svg`、`tide.svg`、`seal.svg`、`feather.svg`
 - 配色方案、装饰层设计、状态投影、Wallpaper Engine 适配、身份层实现
-- 语料整理与文档：`corpus/`、`persona/`、`README*.md`、`INSTALL.md`
+- 语料整理与文档：`corpus/`、`README*.md`
 
 ## 三、语料来源
 
 `corpus/` 下的今汐角色文本提取自 **wuther.in** 的角色资料库
 （`https://wuther.in/zh/character/1304/`，数据版本见各文件头部的溯源块）。
 提取脚本 `tools/extract-jinhsi.mjs` 可复现全过程。这些文本的原始著作权
-归库洛游戏所有，此处仅作个人参考与角色扮演之用。
+归库洛游戏所有，此处仅作个人参考。
 
 ## 四、生态与依赖致谢
 
@@ -61,9 +61,6 @@
   `performance-guidelines-v1.md`。
   没有这份契约面，纯声明式的第三方皮肤不可能存在。
   该包以 Apache-2.0 发布。
-- **[@deepseek-ai/dsh-agent-presets](https://github.com/deepseek-ai/deepseek-harness)**
-  — 本主题的人格预设由 `tools/compose-preset.mjs` 在其 `standard` 组合基础上
-  现场合成，**不随本仓库分发**其组合文本。
 - **蓝色幻想（blue-fantasy）** — 皮肤中心的内置皮肤，是本主题实现
   `--dsw-skin-scrim` 联动与装饰层用法的参照。
 - **深海女仆工坊（maid-atelier）**（作者 Small-tailqwq）— 其皮肤目录结构

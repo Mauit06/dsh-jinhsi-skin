@@ -1,7 +1,7 @@
 # 今汐·洄天溯海 — DSH 主题包
 
-《鸣潮》今州令尹**今汐**的 DeepSeek Harness 主题。包含一个皮肤中心 v2 皮肤、
-一份从 wuther.in 提取的完整今汐语料，以及一套可直接安装的「今汐」Agent 人格预设。
+《鸣潮》今州令尹**今汐**的 DeepSeek Harness 主题。包含一个皮肤中心 v2 皮肤
+与一份从 wuther.in 提取的今汐语料。
 
 ---
 
@@ -11,7 +11,6 @@
 | --- | --- | --- |
 | **皮肤（"插件"本体）** | `skin/` | 符合 DSH 皮肤中心 **v2 皮肤契约**的纯资产目录。装进 `$DSH_HOME/skins/` 后在「设置 → 皮肤中心」试穿/应用，**无需重启** |
 | **语料** | `corpus/` | 从 wuther.in 提取的**全部**今汐文本，9 份 Markdown + 2 份原始 JSON |
-| **人格提示词** | `persona/` | 人读的完整人设文档 + 注入模型的纯文本 + Agent 预设元数据 |
 | **安装器** | `install.ps1` / `uninstall.ps1` | 幂等、带安全标记校验、失败回滚 |
 | **工具** | `tools/` | 抓取、校验、预览生成、预设合成，全部可复现 |
 
@@ -21,11 +20,8 @@
 # 1) 只装皮肤
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 
-# 2) 皮肤 + 今汐人格预设
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -WithPersona
-
-# 3) 先看会做什么，不写任何文件
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -DryRun -WithPersona
+# 2) 先看会做什么，不写任何文件
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -DryRun
 ```
 
 装完刷新浏览器页面，打开 **设置 → 皮肤中心**，列表里会出现「今汐·洄天溯海」。
@@ -291,37 +287,6 @@ node tools/extract-jinhsi.mjs --refresh  # 强制重新下载
 
 ---
 
-## 人格提示词
-
-- **`persona/今汐-人格提示词.md`** —— 完整人设：设定锚点、性格的四个面、说话方式、
-  语气分层、边界、语气样例。每处引语都标注了在 `corpus/` 里的出处。
-- **`persona/system-prompt.txt`** —— 真正注入模型的纯文本。
-- **`persona/preset/preset.yml`** —— Agent 预设 roster 元数据。
-
-### 设计要点
-
-这条人格刻意**不写**「你要如何调用工具」——工具纪律由 harness 自己给。
-它只给三件事：声音、判断的倾向、边界。
-
-它把「今汐是谁」直译成工程行为，而且这不是硬拗，原文本来就长这样：
-
-| 她的原话 | 工程上的含义 |
-| --- | --- |
-| 「我从不打无准备之仗，证据早已由巡宁所收集完毕」 | 先读代码、先复现、先取证，再下结论 |
-| 「令尹都会第一时间赶到现场，亲自了解状况」 | 亲自核实现状，不靠猜测转述 |
-| 「把民众的细碎愿望翻译成对应的策略」 | 把含糊需求翻译成可执行的下一步 |
-| 「没有实绩支撑的笑容会被认为是伪善敷衍」 | 不空口承诺，用可验证的结果说话 |
-| 「令尹生起气来也不可怕，反倒……令人安心」 | 发现问题时给依据与修复路径，而不是情绪 |
-
-安装脚本会读取**本机在线**的 `standard` Agent 预设组合，**只替换 `persona` 行**，
-其余 17 个顶层行（agent-instructions、工具、技能、计划、目标、委派、压缩…）原样保留。
-因此它**仍然是一个完整能力的编码 Agent**，只是换了谁在说话。
-
-> 为什么不设 `complete: true`：那会让人格变成「完整系统提示」，顶掉 harness 自带的
-> 工具指引与运行时上下文，Agent 会失去全部工具纪律。
-
----
-
 ## 工具
 
 | 脚本 | 用途 |
@@ -330,7 +295,6 @@ node tools/extract-jinhsi.mjs --refresh  # 强制重新下载
 | `tools/validate-skin.mjs` | 皮肤 fail-closed 自检（见下）；`--self-test` 验证作用域判死逻辑 |
 | `tools/make-preview.mjs` | 用 headless Edge 渲染 `tools/preview-mock.html` 并抓 `preview/*.jpg`；`--we <图>` 额外出一张 WE 适配对照图 |
 | `tools/preview-mock.html` | 壳层静态复刻，供预览与离线调试（皮肤本身不含 JS） |
-| `tools/compose-preset.mjs` | 合成 Agent 预设组合，含 YAML 结构与内容校验 |
 
 ### 皮肤自检覆盖
 
@@ -358,14 +322,17 @@ node tools/validate-skin.mjs
   非官方市场来源的 `hooks.mjs` 会被拒绝。声明它只会在目录里留一条无用的诊断。）
 - 不写入 API Key、凭据、`.env`、`.credentials.yaml`、会话记录或本机用户路径。
 - 不修改 `cordis.patch.yml`，不添加 npm 依赖，不改动任何其他皮肤或预设。
-- 安装器只创建 `$DSH_HOME/skins/jinhsi-spectro/` 与（可选）`$DSH_HOME/.agent-presets/jinhsi/`；
-  卸载器带安全标记校验，只在标记匹配时删除这两个目录。
+- 安装器只创建 `$DSH_HOME/skins/jinhsi-spectro/`；卸载器带安全标记校验，只在标记匹配时删除它。
 - 皮肤不联网。装饰层与状态投影全部是 CSS，无遥测、无远程脚本、无 CDN。
 
 ### 美术归属
 
-- **角色立绘**（`jinhsi-*.webp`）取自 wuther.in 站点静态资源，版权归**库洛游戏**所有，
-  **仅限本机个人使用，不得再分发**。`../skin.json` 的 `license` / `attribution` 字段已如实声明。
+- **动态壁纸背景**（`jinhsi-quiet.mp4`，1920×1080 / 8 秒 / H.264，亮暗共用同一段）取自
+  Wallpaper Engine 创意工坊 item 3606711102「今汐——安静」的本机导出件：画面是官方今汐美术
+  （© 库洛游戏），场景工程归壁纸原作者。它没有可下载的官方地址，因此**随包分发**——
+  否则别的机器装上皮肤就没有底图；相关声明见 `../NOTICE` 与 `../skin/skin.json`。
+- **头像**（`jinhsi-head.webp`）取自 wuther.in 站点静态资源，版权归**库洛游戏**所有，
+  **仅限本机个人使用，不得再分发**。
 - **装饰纹样**（`crest.svg` / `scales.svg` / `tide.svg` / `seal.svg` / `feather.svg`）
   为原创绘制，随本包自由使用。
 
@@ -388,7 +355,7 @@ node tools/validate-skin.mjs
 
 - DSH `>= 0.1.5-rc.1`（皮肤中心 `@linxin666/dsh-client-ui-skin-center` v2 契约）
 - Windows PowerShell 5.1+ / PowerShell 7
-- Node.js 22+（仅人格预设合成与工具脚本需要；只装皮肤不需要）
+- Node.js 22+（工具脚本需要；只装皮肤不需要）
 
 ---
 
@@ -424,25 +391,18 @@ node tools/validate-skin.mjs
 ```
 jinhsi-spectro/
 ├─ README.md                 本文件
-├─ INSTALL.md                安装 · 激活 · 排错 · 卸载 · 手工方案
-├─ install.ps1               安装器（-DryRun / -WithPersona / -PersonaOnly）
-├─ uninstall.ps1             卸载器（-DryRun / -PersonaOnly / -SkinOnly）
 ├─ we-adaptation.jpg         Wallpaper Engine 适配对照图
 ├─ hero.jpg                  新对话页抬头对照图
 ├─ skin/                     ★ 皮肤本体（纯资产目录）
 │  ├─ skin.json              manifest v2
 │  ├─ skin.css               L1 token 重映射 + L2 语义层
 │  ├─ patches.css            L3 装饰层 + 状态投影 + WE 适配
-│  ├─ assets/                5 张官方立绘 + 5 张自绘 SVG
+│  ├─ assets/                动态壁纸 + 自绘 SVG（头像于安装时取回）
 │  └─ preview/               light.jpg / dark.jpg
 ├─ corpus/                   ★ 今汐语料
 │  ├─ 00-索引.md … 08-养成材料与配装.md
 │  └─ raw/                   原始 JSON
-├─ persona/                  ★ 人格提示词
-│  ├─ 今汐-人格提示词.md
-│  ├─ system-prompt.txt
-│  └─ preset/preset.yml
-└─ tools/                    抓取 / 校验 / 预览 / 合成
+└─ tools/                    抓取 / 校验 / 预览
 ```
 
 ---
@@ -450,6 +410,6 @@ jinhsi-spectro/
 ## 授权
 
 - 代码、CSS、自绘纹样、语料整理与文档：随本包自由使用。
-- 角色立绘：© Kuro Games，见上文「美术归属」。
+- 动态壁纸画面与头像：© Kuro Games，见上文「美术归属」。
 - 《鸣潮》/ Wuthering Waves 及相关角色为库洛游戏商标与版权内容。
   本包是非官方第三方主题，与库洛游戏、DeepSeek 均无隶属或背书关系。

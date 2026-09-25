@@ -55,5 +55,5 @@ dsh plugin --profile web add @linxin666/dsh-client-ui-skin-center@0.3.24
 ## 其他环境
 
 - Windows PowerShell 5.1+ / PowerShell 7
-- Node.js 22+（仅人格预设合成与工具脚本需要；只装皮肤不需要）
+- Node.js 22+（工具脚本需要；只装皮肤不需要）
 - 状态投影用 :has()，需要 Chromium（DSH Web GUI 只跑 Chromium，安全）
